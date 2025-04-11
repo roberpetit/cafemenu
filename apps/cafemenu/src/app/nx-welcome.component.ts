@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-nx-welcome',
   imports: [CommonModule],
+  standalone: true,
   template: `
     <!--
      * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -864,6 +865,5 @@ nx g &#64;nx/angular:component ui/src/lib/button</pre>
     </div>
   `,
   styles: [],
-  encapsulation: ViewEncapsulation.None,
 })
 export class NxWelcomeComponent {}
