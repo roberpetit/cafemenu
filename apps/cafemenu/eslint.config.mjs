@@ -24,11 +24,16 @@ export default [
           style: 'kebab-case',
         },
       ],
+      
     },
   },
   {
     files: ['**/*.html'],
     // Override or add rules here
-    rules: {},
+    rules: {
+      "@angular-eslint/template/interactive-supports-focus": [
+        "error"
+      ]
+    },
   },
 ];

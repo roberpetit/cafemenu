@@ -5,6 +5,6 @@ import { CommonModule } from '@angular/common';
   selector: 'lib-monolib',
   imports: [CommonModule],
   templateUrl: './monolib.component.html',
-  styleUrl: './monolib.component.css',
+  styleUrl: './monolib.component.scss',
 })
 export class MonolibComponent {}

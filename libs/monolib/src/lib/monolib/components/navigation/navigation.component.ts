@@ -8,12 +8,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'lib-navigation',
   templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.css',
+  styleUrl: './navigation.component.scss',
   standalone: true,
   imports: [
     MatToolbarModule,
@@ -23,6 +23,7 @@ import { RouterOutlet } from '@angular/router';
     MatIconModule,
     AsyncPipe,
     RouterOutlet,
+    RouterLink,
   ]
 })
 export class NavigationComponent {
@@ -33,4 +34,5 @@ export class NavigationComponent {
       map(result => result.matches),
       shareReplay()
     );
+
 }

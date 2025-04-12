@@ -7,7 +7,7 @@ import { NavigationComponent } from '@cafemenu-monorepo/monolib';
   imports: [RouterModule, NavigationComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'cafemenu';

@@ -1,0 +1,32 @@
+
+@use '@angular/material' as mat;
+@include mat.core();
+@import '@angular/material/prebuilt-themes/purple-green.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body { 
+    height: 100%; 
+    
+
+
+}
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+  
+.content {
+    margin: 20px;
+}
+
+/*
+:root {
+    @include mat.toolbar-overrides((
+        container-background-color: grey,
+        container-text-color: black,
+        ));
+        @include mat.sidenav-overrides((
+            container-background-color: grey,
+            container-text-color: black,
+            ));
+        }
+        */
