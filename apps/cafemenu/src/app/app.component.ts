@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { NavigationComponent } from '@cafemenu-monorepo/monolib';
 
 @Component({
@@ -9,10 +8,6 @@ import { NavigationComponent } from '@cafemenu-monorepo/monolib';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  constructor(private router: Router) {}
-  ngOnInit(): void {
-    this.router.navigate(['/menu']);
-  }
+export class AppComponent {
   title = 'cafemenu';
 }

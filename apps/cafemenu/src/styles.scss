@@ -1,22 +1,42 @@
 
 @use '@angular/material' as mat;
 @include mat.core();
-@import '@angular/material/prebuilt-themes/purple-green.css';
-//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/purple-green.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+$angular-material-3-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: (
+      plain-family: Roboto,
+      brand-family: Helvetica,
+      bold-weight: 900,
+      medium-weight: 500,
+      regular-weight: 300,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+:root {
+  @include mat.all-component-themes($angular-material-3-theme);
+}
 
 html, body { 
     height: 100%; 
-    
-
-
+    color-scheme: light dark;
 }
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-  
-.content {
-    margin: 20px;
-}
 
 /*
 :root {

@@ -17,6 +17,9 @@
 }
 
 .inner-content {
+  z-index: -1;
+  position: relative;
+  top: 64px; /* Height of the toolbar */
   margin: 10px;
 }
 

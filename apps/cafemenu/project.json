@@ -19,6 +19,7 @@
           "zone.js"
         ],
         "tsConfig": "apps/cafemenu/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",

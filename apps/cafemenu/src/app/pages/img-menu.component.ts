@@ -14,16 +14,13 @@ export class ImgMenuComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log("navigateTo", this.navigateTo);
     this.activatedRoute.params.subscribe((params) => {
-      console.log("params", params);
       if (params['pagina']) {
         this.navigateTo = params['pagina'];
         this.scrollTo(this.navigateTo);
+        console.log("navigateTo", this.navigateTo);
       }
-    }
-    );
-    console.log("navigateTo", this.navigateTo);
+    });
   }
 
   scrollTo(id: string) {
