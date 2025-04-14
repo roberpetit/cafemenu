@@ -17,7 +17,27 @@ $angular-material-3-theme: mat.define-theme(
     typography: (
       plain-family: Roboto,
       brand-family: Helvetica,
-      bold-weight: 900,
+      bold-weight: 800,
+      medium-weight: 500,
+      regular-weight: 300,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+$angular-material-3-dark: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: (
+      plain-family: Roboto,
+      brand-family: Helvetica,
+      bold-weight: 800,
       medium-weight: 500,
       regular-weight: 300,
     ),
@@ -28,7 +48,7 @@ $angular-material-3-theme: mat.define-theme(
 );
 
 :root {
-  @include mat.all-component-themes($angular-material-3-theme);
+  @include mat.all-component-themes($angular-material-3-dark);
 }
 
 html, body { 

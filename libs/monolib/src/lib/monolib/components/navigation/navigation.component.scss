@@ -26,3 +26,17 @@
 .fixed-header {
   position: fixed;
 }
+
+.logo {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 164px;
+}
