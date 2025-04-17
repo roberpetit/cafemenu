@@ -1,33 +1,54 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav   #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="sidenav-header" color="primary">
-      <img src="/logo.svg" alt="Logo" class="logo"/>
+      <img src="/logo.svg" alt="Logo" class="logo" style="fill: black;" (onClick)="changeTheme()" />
     </mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="['menu', 'salado']">Salado</a>
-      <a mat-list-item [routerLink]="['menu', 'dulce']" >Dulce</a>
-      <a mat-list-item [routerLink]="['menu', 'infusiones1']" >Infusiones 1</a>
-      <a mat-list-item [routerLink]="['menu', 'infusiones2']" >Infusiones 2</a>
+      <a mat-list-item [routerLink]="['menu', 'dulce']">Dulce</a>
+      <a mat-list-item [routerLink]="['menu', 'infusiones1']">Infusiones 1</a>
+      <a mat-list-item [routerLink]="['menu', 'infusiones2']">Infusiones 2</a>
+      <a mat-list-item [routerLink]="['modify']">editar</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar class="fixed-header">
-      @if (isHandset$ | async) {
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-      }
-      <span>Santos Cafe</span>
-    </mat-toolbar >
+      <mat-toolbar fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
+          @if (isHandset$ | async) {
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          }
+          <span>Santos Cafe</span>
+
+          <span class="menu-spacer"></span>
+          <span class="spacer"></span>
+          @if (theme() !== 'color-scheme-light') {
+          <button mat-icon-button (click)="onThemeChange()">
+            <mat-icon>light_mode</mat-icon>
+          </button>
+          }
+          @else {
+          <button mat-icon-button (click)="onThemeChange()">
+            <mat-icon>dark_mode</mat-icon>
+          </button>
+          }
+
+          <button color="warn" mat-icon-button aria-label="heart icon">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          @if (theme() !== 'color-scheme-light') {
+          <button mat-icon-button aria-label="instagram icon" color="primary">
+            <img src="/instagram_white.svg" alt="instagram" class="logo" (onClick)="changeTheme()" />
+          </button>
+          }
+          @else {
+          <button mat-icon-button aria-label="instagram icon" color="primary">
+            <img src="/instagram.svg" alt="instagram" class="logo" (onClick)="changeTheme()" />
+          </button>
+          }
+      </mat-toolbar>
     <div class="inner-content">
-      
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

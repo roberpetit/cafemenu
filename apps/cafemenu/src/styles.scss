@@ -1,18 +1,19 @@
 
 @use '@angular/material' as mat;
+@use "./styles/themes/theme-colors";
+@use "./styles/theme-typography.scss" as m3-theme-typography;
+
 @include mat.core();
 //@import '@angular/material/prebuilt-themes/purple-green.css';
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-
-
-$angular-material-3-theme: mat.define-theme(
+$angular-material-3-theme-dark: mat.define-theme(
   (
     color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      theme-type: dark,
+      primary: theme-colors.$primary-palette,
+      tertiary: theme-colors.$tertiary-palette,
     ),
     typography: (
       plain-family: Roboto,
@@ -26,13 +27,12 @@ $angular-material-3-theme: mat.define-theme(
     ),
   )
 );
-
-$angular-material-3-dark: mat.define-theme(
+$angular-material-3-theme-light: mat.define-theme(
   (
     color: (
-      theme-type: dark,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      theme-type: light,
+      primary: theme-colors.$primary-palette,
+      tertiary: theme-colors.$tertiary-palette,
     ),
     typography: (
       plain-family: Roboto,
@@ -48,7 +48,8 @@ $angular-material-3-dark: mat.define-theme(
 );
 
 :root {
-  @include mat.all-component-themes($angular-material-3-dark);
+  @include mat.all-component-themes($angular-material-3-theme-dark);
+  @include m3-theme-typography.my-typography-hierarchy;
 }
 
 html, body { 
@@ -57,8 +58,19 @@ html, body {
 }
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  //background: var(--mat-sys-surface);
+  //color: var(--mat-sys-on-surface);
+}
+.color-scheme-dark {
+  @include mat.all-component-themes($angular-material-3-theme-dark);
+}
 
+.color-scheme-light {
+  @include mat.all-component-themes($angular-material-3-theme-light);
+}
 /*
+
 :root {
     @include mat.toolbar-overrides((
         container-background-color: grey,

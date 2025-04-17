@@ -1,10 +1,22 @@
+<div class="content">
+  <mat-divider></mat-divider>
+  <section>
+    <h2>Menu</h2>
 
-<section>
+    <mat-list>
+      @for (item of menuItems; track $index) {
+        <mat-list-item>
+          <h3 matListItemTitle>{{item.title}}</h3>
+          <span matListItemLine>{{item.description}}</span>
+        </mat-list-item>
+      }
+    </mat-list>
+  </section>
+
+  <section>
     <div class="example-button-row">
-      <button mat-button color="primary">Basic</button>
-      <img src="/logo.svg" alt="Logo" />
-      <button mat-button disabled>Disabled</button>
-      <a mat-button href="https://www.google.com/" target="_blank">Link</a>
+      <button mat-button color="primary">Agregar</button>
     </div>
   </section>
   <mat-divider></mat-divider>
+</div>

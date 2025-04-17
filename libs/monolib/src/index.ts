@@ -1,2 +1,3 @@
 export * from './lib/monolib/monolib.component';
 export * from './lib/monolib/components/navigation/navigation.component';
+export * from './lib/monolib/services/theme.service';
