@@ -1,5 +1,21 @@
+
+.sidenav {
+  padding-top: 64px; /* Height of the toolbar */
+  width: 200px;
+}
+
+.mobile-header {
+  position: fixed;
+  z-index: 9999;
+}
+
+.not-mobile-header {
+  position: fixed;
+  z-index: 9999;
+}
+
 .sidenav-container {
-  height: 100%;
+  padding-top: 64px; /* Height of the toolbar */
 }
 
 .sidenav .mat-toolbar {
@@ -17,23 +33,6 @@
   position: relative;
   top: 64px; /* Height of the toolbar */
   margin: 10px;
-}
-
-.sidenav {
-  width: 30%;
-  max-width: 200px;
-}
-
-.mobile-header {
-  position: fixed;
-}
-
-.not-mobile-header {
-  position: fixed;
-}
-
-.fixed {
-  position: fixed;
 }
 
 .logo {
