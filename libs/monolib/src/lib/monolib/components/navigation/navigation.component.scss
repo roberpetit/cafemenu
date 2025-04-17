@@ -16,6 +16,7 @@
 
 .sidenav-container {
   padding-top: 64px; /* Height of the toolbar */
+  min-height: 1000px;
 }
 
 .sidenav .mat-toolbar {
@@ -33,6 +34,7 @@
   position: relative;
   top: 64px; /* Height of the toolbar */
   margin: 10px;
+  min-height: 1000px;
 }
 
 .logo {

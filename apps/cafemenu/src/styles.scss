@@ -8,6 +8,8 @@
 //@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 //@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+@import 'bootstrap/scss/bootstrap-grid.scss';
+
 $angular-material-3-theme-dark: mat.define-theme(
   (
     color: (
@@ -48,37 +50,44 @@ $angular-material-3-theme-light: mat.define-theme(
 );
 
 :root {
-  @include mat.all-component-themes($angular-material-3-theme-dark);
+  @include mat.all-component-themes($angular-material-3-theme-light);
   @include m3-theme-typography.my-typography-hierarchy;
 }
 
 html, body { 
     height: 100%; 
-    color-scheme: light dark;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-body {
-  //background: var(--mat-sys-surface);
-  //color: var(--mat-sys-on-surface);
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+  min-height: 1000px;
 }
+body {
+  background-image: url("./../public/fondo.jpeg");
+  background-size: contain;
+}
+
 .color-scheme-dark {
   @include mat.all-component-themes($angular-material-3-theme-dark);
+  @include mat.sidenav-overrides((
+    content-background-color: transparent,
+  ));
 }
 
 .color-scheme-light {
   @include mat.all-component-themes($angular-material-3-theme-light);
+  @include mat.sidenav-overrides((
+    content-background-color: transparent,
+  ));
 }
-/*
 
 :root {
-    @include mat.toolbar-overrides((
-        container-background-color: grey,
-        container-text-color: black,
-        ));
-        @include mat.sidenav-overrides((
-            container-background-color: grey,
-            container-text-color: black,
-            ));
-        }
-        */
+  @include mat.sidenav-overrides((
+    content-background-color: transparent,
+  ));
+}
+
+.transparent {
+  @include mat.card-overrides((
+    elevated-container-color: transparent,
+  ));
+}

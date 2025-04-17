@@ -1,22 +1,50 @@
-<div class="content">
+<div class="container">
   <mat-divider></mat-divider>
-  <section>
-    <h2>Menu</h2>
+  
+  <h2>Menu</h2>
 
-    <mat-list>
-      @for (item of menuItems; track $index) {
-        <mat-list-item>
-          <h3 matListItemTitle>{{item.title}}</h3>
-          <span matListItemLine>{{item.description}}</span>
-        </mat-list-item>
-      }
-    </mat-list>
-  </section>
 
-  <section>
-    <div class="example-button-row">
-      <button mat-button color="primary">Agregar</button>
-    </div>
-  </section>
-  <mat-divider></mat-divider>
+
+      
+        <div class="row">
+        @for (item of menuItems; track $index) {
+            <div class="col-sm-6">
+              <mat-card class="transparent">
+                <mat-card-content>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <h3 >{{item.title}}</h3>
+                  </div>
+                  <div class="col-sm-4">
+                    <span >{{item.price | number: '1.0-0': 'es'}}</span>
+                    <span >  $</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <span >{{item.description}}</span>
+                  </div>
+                </div>
+                </mat-card-content>
+              </mat-card>
+
+              <br/>
+            </div>
+          }
+        </div>
+
+        <br/>
+    @if (!showNewItemForm) {
+      <div class="row">
+        <div class="col-sm-6">
+          <button mat-raised-button color="primary" (click)="addNewItem()">Agregar nuevo Item</button>
+        </div>
+      </div>
+    }
+    @if (showNewItemForm) {
+      <lib-new-item (itemAdded)="onItemAdded($event)"/>
+    }
 </div>
+
+
+

@@ -1,4 +1,4 @@
-<mat-toolbar fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
+<mat-toolbar class="color-scheme-dark" fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
   @if (isHandset$ | async) {
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -34,9 +34,8 @@
   }
 </mat-toolbar>
 
-
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  <mat-sidenav #drawer class="sidenav color-scheme-dark" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="sidenav-header" color="primary">
       <img src="/logo.svg" alt="Logo" class="logo" style="fill: black;" (onClick)="changeTheme()" />
@@ -49,10 +48,7 @@
       <a mat-list-item [routerLink]="['modify']">editar</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-
-
-      
+  <mat-sidenav-content class="color-scheme-light">
     <div class="inner-content">
       <router-outlet></router-outlet>
     </div>
