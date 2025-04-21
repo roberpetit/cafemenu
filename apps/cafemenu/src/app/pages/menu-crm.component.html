@@ -1,50 +1,53 @@
 <div class="container">
-  <mat-divider></mat-divider>
-  
-  <h2>Menu</h2>
-
-
-
-      
-        <div class="row">
-        @for (item of menuItems; track $index) {
-            <div class="col-sm-6">
-              <mat-card class="transparent">
-                <mat-card-content>
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h3 >{{item.title}}</h3>
-                  </div>
-                  <div class="col-sm-4">
-                    <span >{{item.price | number: '1.0-0': 'es'}}</span>
-                    <span >  $</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-8">
-                    <span >{{item.description}}</span>
-                  </div>
-                </div>
-                </mat-card-content>
-              </mat-card>
-
-              <br/>
+  <h1>Menu</h1>
+  <div class="row">
+    @for (item of menuItems; track $index) {
+    <div class="col-sm-6">
+      <mat-card class="transparent">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-8">
+              <h3>{{item.title}}</h3>
             </div>
-          }
-        </div>
-
-        <br/>
-    @if (!showNewItemForm) {
-      <div class="row">
-        <div class="col-sm-6">
-          <button mat-raised-button color="primary" (click)="addNewItem()">Agregar nuevo Item</button>
-        </div>
-      </div>
+            <div class="col-sm-4">
+              <h3>
+                <span>{{item.price | number: '1.0-0': 'es'}}</span>
+                <span> $</span>
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>{{item.description}}</span>
+            </div>
+            @if (editable) {
+              <div class="col-sm-1">
+                <button mat-icon-button color="primary" (click)="editItem(item)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div class="col-sm-1">
+                <button mat-icon-button color="warn" (click)="deleteItem(item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <br />
+    </div>
     }
-    @if (showNewItemForm) {
-      <lib-new-item (itemAdded)="onItemAdded($event)"/>
-    }
+  </div>
+  <br />
+  @if (!showNewItemForm) {
+  <div class="row">
+    <div class="col-sm-6">
+      <button mat-raised-button color="primary" (click)="addNewItem()">Agregar nuevo Item</button>
+    </div>
+  </div>
+  }
+  @if (showNewItemForm) {
+  <lib-new-item (itemAdded)="onItemAdded($event)" />
+  }
 </div>
-
-
-

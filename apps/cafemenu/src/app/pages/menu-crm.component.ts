@@ -16,7 +16,7 @@ export interface MenuItem {
 }
 @Component({
   selector: 'app-menu-crm',
-  imports: [CommonModule, MatDivider, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, MatCardModule],
+  imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, MatCardModule],
   templateUrl: './menu-crm.component.html',
   styleUrl: './menu-crm.component.scss',
 })
@@ -32,15 +32,16 @@ export class MenuCrmComponent {
     { icon: '', title: 'Titulo', description: 'Descripcion', price: 10000 },
   ];
   showNewItemForm = false;
-
+  editable = false;
+  
   addNewItem(): void {
     this.showNewItemForm = true;
   }
 
-  deleteItem(): void {
+  deleteItem(item: MenuItem): void {
     console.log('Delete item clicked');
   }
-  editItem(): void {
+  editItem(item: MenuItem): void {
     console.log('Edit item clicked');
   }
 

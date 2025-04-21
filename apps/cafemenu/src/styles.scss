@@ -2,13 +2,13 @@
 @use '@angular/material' as mat;
 @use "./styles/themes/theme-colors";
 @use "./styles/theme-typography.scss" as m3-theme-typography;
+@use 'bootstrap/scss/bootstrap-grid.scss';
 
 @include mat.core();
 //@import '@angular/material/prebuilt-themes/purple-green.css';
 //@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 //@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-@import 'bootstrap/scss/bootstrap-grid.scss';
 
 $angular-material-3-theme-dark: mat.define-theme(
   (
@@ -18,11 +18,7 @@ $angular-material-3-theme-dark: mat.define-theme(
       tertiary: theme-colors.$tertiary-palette,
     ),
     typography: (
-      plain-family: Roboto,
-      brand-family: Helvetica,
-      bold-weight: 800,
-      medium-weight: 500,
-      regular-weight: 300,
+      use-system-variables: true
     ),
     density: (
       scale: 0,
@@ -37,48 +33,44 @@ $angular-material-3-theme-light: mat.define-theme(
       tertiary: theme-colors.$tertiary-palette,
     ),
     typography: (
-      plain-family: Roboto,
-      brand-family: Helvetica,
-      bold-weight: 800,
-      medium-weight: 500,
-      regular-weight: 300,
+      use-system-variables: true
     ),
     density: (
       scale: 0,
     ),
-  )
+  ),
 );
-
-:root {
-  @include mat.all-component-themes($angular-material-3-theme-light);
-  @include m3-theme-typography.my-typography-hierarchy;
-}
 
 html, body { 
     height: 100%; 
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
-  min-height: 1000px;
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  @include mat.all-component-themes($angular-material-3-theme-light);
+  @include mat.sidenav-overrides((
+    content-background-color: transparent,
+  ));
 }
+
 body {
+  min-height: 1000px;
   background-image: url("./../public/fondo.jpeg");
-  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .color-scheme-dark {
-  @include mat.all-component-themes($angular-material-3-theme-dark);
+  @include mat.all-component-colors($angular-material-3-theme-dark);
   @include mat.sidenav-overrides((
     content-background-color: transparent,
   ));
 }
 
 .color-scheme-light {
-  @include mat.all-component-themes($angular-material-3-theme-light);
-  @include mat.sidenav-overrides((
-    content-background-color: transparent,
-  ));
-}
+  //@include mat.theme($angular-material-3-theme-light);
+ }
 
 :root {
   @include mat.sidenav-overrides((

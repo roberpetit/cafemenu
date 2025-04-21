@@ -1,38 +1,37 @@
 <form [formGroup]="newItemForm" (ngSubmit)="onSubmit()">
-    <mat-card >
-      <mat-card-content>
-        <div class="row">
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Nombre" formControlName="title">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-8">
-            <mat-form-field class="full-width">
-                <input matInput placeholder="Descripcion" formControlName="description">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-2">
-            <mat-form-field class="full-width">
-                <input matInput placeholder="Precio" type="number" step="1000" formControlName="price">
-            </mat-form-field>
-          </div>
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre" formControlName="title">
+          </mat-form-field>
         </div>
-        <div class="row">
-          <div class="col">
-            <mat-label>Menu: </mat-label>
-            <mat-radio-group formControlName="page">
-              <mat-radio-button value="salado">Salado</mat-radio-button>
-              <mat-radio-button value="dulce">Dulce</mat-radio-button>
-              <mat-radio-button value="infusiones 1">Infusiones 1</mat-radio-button>
-              <mat-radio-button value="infusiones 2">Infusiones 2</mat-radio-button>
-            </mat-radio-group>
-          </div>
+        <div class="col-sm-8">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Descripcion" formControlName="description">
+          </mat-form-field>
         </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
-  
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Precio" type="number" step="1000" formControlName="price">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-label>Menu: </mat-label>
+          <mat-radio-group formControlName="page">
+            <mat-radio-button value="salado">Salado</mat-radio-button>
+            <mat-radio-button value="dulce">Dulce</mat-radio-button>
+            <mat-radio-button value="infusiones 1">Infusiones 1</mat-radio-button>
+            <mat-radio-button value="infusiones 2">Infusiones 2</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -34,7 +34,7 @@
   }
 </mat-toolbar>
 
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" cdkScrollable>
   <mat-sidenav #drawer class="sidenav color-scheme-dark" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="sidenav-header" color="primary">
@@ -45,7 +45,7 @@
       <a mat-list-item [routerLink]="['menu', 'dulce']">Dulce</a>
       <a mat-list-item [routerLink]="['menu', 'infusiones1']">Infusiones 1</a>
       <a mat-list-item [routerLink]="['menu', 'infusiones2']">Infusiones 2</a>
-      <a mat-list-item [routerLink]="['modify']">editar</a>
+      <a mat-list-item [routerLink]="['modify']">Editar</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="color-scheme-light">
