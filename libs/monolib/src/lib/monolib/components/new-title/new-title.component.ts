@@ -10,9 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 
 
 @Component({
-  selector: 'lib-new-item',
-  templateUrl: './new-item.component.html',
-  styleUrl: './new-item.component.scss',
+  selector: 'lib-new-title',
+  templateUrl: './new-title.component.html',
+  styleUrl: './new-title.component.scss',
   standalone: true,
   imports: [
     MatInputModule,
@@ -23,26 +23,25 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule
   ]
 })
-export class NewItemComponent {
-  @Output() itemAdded = new EventEmitter<any>();
+export class NewTitleComponent {
+  @Output() titleAdded = new EventEmitter<any>();
 
   private fb = inject(FormBuilder);
-  newItemForm = this.fb.group({
+  newTitleForm = this.fb.group({
     title: [null, Validators.required],
     description: null,
-    price: 3000,
     page: null,
   });
 
   onSubmit(): void {
-    if (this.newItemForm.invalid) {
+    if (this.newTitleForm.invalid) {
       return;
     }
-    this.itemAdded.emit(this.newItemForm.value);
-    console.log(this.newItemForm.value);
+    this.titleAdded.emit(this.newTitleForm.value);
+    console.log(this.newTitleForm.value);
   }
 
   close(): void {
-    this.itemAdded.emit(null);
+    this.titleAdded.emit(null);
   }
 }

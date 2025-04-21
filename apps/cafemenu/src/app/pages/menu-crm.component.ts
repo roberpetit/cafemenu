@@ -4,7 +4,7 @@ import { MatDivider, MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { NewItemComponent } from '@cafemenu-monorepo/monolib';
+import { NewItemComponent, NewTitleComponent } from '@cafemenu-monorepo/monolib';
 import { MatCardModule } from '@angular/material/card';
 
 export interface MenuItem {
@@ -16,7 +16,7 @@ export interface MenuItem {
 }
 @Component({
   selector: 'app-menu-crm',
-  imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, MatCardModule],
+  imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, NewTitleComponent, MatCardModule],
   templateUrl: './menu-crm.component.html',
   styleUrl: './menu-crm.component.scss',
 })
@@ -46,8 +46,10 @@ export class MenuCrmComponent {
   }
 
   onItemAdded(item: MenuItem): void {
+    if (item)
+      this.menuItems.push(item);
+
     this.showNewItemForm = false;
     console.log('Item added:', item);
-    this.menuItems.push(item);
   }
 }

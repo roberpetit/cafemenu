@@ -35,12 +35,9 @@ export class NavigationComponent {
     this.theme = this.themeService.theme;
   }
 
-  changeTheme(): void {
+  instaClick(): void {
     console.log('changeTheme called');
-    const themeService = inject(ThemeService);
-    const currentTheme = themeService.theme();
-    const newTheme = currentTheme === 'color-scheme-dark' ? 'color-scheme-light' : 'color-scheme-dark';
-    themeService.theme.set(newTheme);      
+    window.open('https://www.instagram.com/santoscafe___/?hl=es', "_blank");
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
