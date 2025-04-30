@@ -1,0 +1,343 @@
+[
+  {
+    "title": "Placeres de Azúcar",
+    "items": [
+      {
+        "title": "Medialunas de manteca"
+      },
+      {
+        "title": "Medialunas de manteca con chocolate y frutos secos"
+      },
+      {
+        "title": "Croissant"
+      },
+      {
+        "title": "Alfajor de nuez con nutella y corazón de frutos rojos"
+      },
+      {
+        "title": "Alfajor de chocolate blanco con dulce de leche y avellanas"
+      },
+      {
+        "title": "Cupcake de vainilla con chips de chocolate y dulce de leche"
+      },
+      {
+        "title": "Budín de limón con glasé y semillas de amapola"
+      },
+      {
+        "title": "Budín de naranja y arándanos con glasé"
+      },
+      {
+        "title": "Cookie red velvet con chocolate blanco"
+      },
+      {
+        "title": "Cookie de vainilla con chips de chocolate"
+      },
+      {
+        "title": "Lemon Pie"
+      }
+    ]
+   },
+   {
+    "title": "Bocados Mágicos",
+    "items": [
+      {
+        "title": "Limón y glasé"
+      },
+      {
+        "title": "Brownie con helado de americana"
+      },
+      {
+        "title": "Brownie de chocolate blanco con frutos secos"
+      },
+      {
+        "title": "Pastaflora"
+      }
+    ]
+    },
+    {
+      "title": "Delicias Monumentales (para 2 personas)",
+      "items": [
+      {
+        "title": "Matilda"
+      },
+      {
+        "title": "Cheescake del día"
+      },
+      {
+        "title": "Carrot cake con nueces"
+      },
+      {
+        "title": "Crumble de manzana"
+      },
+      {
+        "title": "Marquise de marroc"
+      }
+    ]
+  },
+  {
+    "title": "Sin TACC",
+    "items": [
+      {
+        "title": "Alfajores"
+      },
+      {
+        "title": "Cookies limón"
+      },
+      {
+        "title": "Tostones"
+      },
+      {
+        "title": "Tostado"
+      },
+      {
+        "title": "Tostadas"
+      }
+    ]
+  },
+  {
+    "title": "Sabores Criollos",
+    "items": [
+      {
+        "title": "Chipa relleno con jamón, queso, palta y huevos revueltos"
+      }
+    ]
+  },
+  {
+    "title": "Delicias de Panadería",
+    "items": [
+      {
+        "title": "Croissant de jamón y queso"
+      },
+      {
+        "title": "Croissant de queso parmesano, tomates cherrys y huevos revueltos"
+      },
+      {
+        "title": "Ciabatta de jamón crudo, queso parmesano, rúcula y crema de ciboulette"
+      },
+      {
+        "title": "Tostado de jamón y queso"
+      },
+      {
+        "title": "Tostado primavera"
+      }
+    ]
+  },
+  {
+    "title": "Tostones Exquisitos",
+    "items": [
+      { "title": "Tostón de palta, huevo revuelto, queso cremay tomates cherry" },
+      { "title": "Tostón de hongos salteados, queso briey queso crema" }
+    ]
+  },
+  {
+    "title": "Desayunos y Especiales con Huevos",
+    "items": [
+      { "title": "Huevos revueltos con queso y semillas" },
+      { "title": "Omelette de mozzarella y panceta crocante" }
+    ]
+  },
+  {
+    "title": "Tostadas & Preparados Calientes",
+    "items": [
+      {
+        "title": "Tostada francesa con frutas de estación",
+        "description": "Con miel, granola, canela y azúcar impalpable"
+      },
+      {
+        "title": "Tostadas de pan lactal o integral",
+        "description": "Con 2 dips untables"
+      }
+    ]
+  },
+  {
+    "title": "Bowls Saludables",
+    "items": [
+      { "title": "Bowl de frutas de estación pintados con miel" },
+      { "title": "Bowl de frutas de estación, yogurt, frutos secos, granola y miel" }
+    ]
+  },
+  {
+    "title": "Cafés clásicos",
+    "items": [
+      { "title": "Ristretto", "description": "Café corto, intenso, de 20 ml" },
+      { "title": "Espresso", "description": "Café corto, intenso, de 30 ml" },
+      { "title": "Doppio", "description": "Doble espresso, 60 ml" },
+      { "title": "Lungo", "description": "Espresso diluído, más suave" },
+      { "title": "Americano", "description": "Doble espresso diluído en agua" },
+      {
+        "title": "Filtrado",
+        "description": "p/ compartirCafé negro con un sabor delicado y suave"
+      },
+      { "title": "Filtrado individual" }
+    ]
+  },
+  {
+    "title": "Cafés con leche",
+    "items": [
+      { "title": "Cortado", "description": "Espresso diluido en leche" },
+      { "title": "Piccolo", "description": "Espresso diluido en leche, muy cremoso" },
+      {
+        "title": "Flat White",
+        "description": "Doble espresso diluido en leche, abundancia en café"
+      },
+      {
+        "title": "Capuccino",
+        "description": "Espresso diluido en leche, muy cremoso, con chocolate y canela"
+      },
+      { "title": "Latte", "description": "Espresso diluido en abundante leche" },
+      {
+        "title": "Latte saborizado",
+        "description": "Avellana, caramelo, vainilla"
+      },
+      {
+        "title": "Mocaccino",
+        "description": "Espresso diluido en abundante leche, con chocolate rayado"
+      },
+      {
+        "title": "Latte macchiato",
+        "description": "Abundante leche, con un ristretto de café"
+      },
+      {
+        "title": "Café bombón",
+        "description": "Espresso diluido en leche, con base de leche condensada y chocolate rayado"
+      },
+      {
+        "title": "Submarino",
+        "description": "Con una barra de chocolate"
+      },
+      {
+        "title": "Chocolate",
+        "description": "Especialidad de la casa"
+      },
+      {
+        "title": "Chocolatada",
+        "description": "Nesquik, ideal para niños"
+      }
+    ],
+    "opcionales": [
+      { "title": "Leche de almendras de la casa" },
+      { "title": "Barra de chocolate" },
+      { "title": "Jarra de leche" }
+    ]
+  },
+  {
+    "title": "Cafés fríos",
+    "items": [
+      {
+        "title": "Iced latte",
+        "description": "Espresso con hielo, diluido en abundante leche"
+      },
+      {
+        "title": "Cold brew",
+        "description": "Café filtrado muy suave,por más de 20 horas"
+      },
+      {
+        "title": "Espresso santos",
+        "description": "Espresso diluido en tónica, hielo y una rodaja de naranja"
+      },
+      {
+        "title": "Afogatto",
+        "description": "Helado de americana con chocolate rayado, pintado con un espresso"
+      },
+      {
+        "title": "Frappe",
+        "description": "Espresso, leche y hielo con caramelo o chocolate"
+      },
+      {
+        "title": "Cookie de vainilla con chips de chocolate",
+        "description": "Espresso diluido en leche ¡especial de la casa!"
+      }
+    ]
+  },
+  {
+    "title": "Tés de especialidad",
+    "items": [
+      {
+        "title": "Negro",
+        "description": "Té negro puro"
+      },
+      {
+        "title": "Citrus green",
+        "description": "Té Verde Sencha, cascaritas de naranja, aceite de limón y naranja"
+      },
+      {
+        "title": "Frutos rojos",
+        "description": "Rosa Mosqueta, hibiscus, trocitos de manzana, cáscara de naranja, sabor frutos rojos"
+      },
+      {
+        "title": "Mumbai",
+        "description": "Té canela, cardamomo, clavo de olor, jengibre y anís, cascarillas de cacao y vainilla"
+      }
+    ]
+  },
+  {
+    "title": "Otras Bebidas Frescas",
+    "items": [
+      {
+        "title": "Exprimido de naranja natural"
+      },
+      {
+        "title": "Limonada/jarra 1ltr.",
+        "description": "Jugo de limón, agua, almíbar, hielo, jengibre y pepino"
+      },
+      {
+        "title": "Limonada/vaso",
+        "description": "Jugo de limón, agua, almíbar, hielo, jengibre y pepino"
+      },
+      {
+        "title": "Limonada de estación",
+        "description": "Jugo de limón, agua, almíbar, hielo y frutos rojos"
+      },
+      {
+        "title": "Licuados",
+        "description": "Con agua"
+      },
+      {
+        "title": "Licuados",
+        "description": "Con leche o exprimido de naranja"
+      }
+    ],
+    "opcionales": [
+      { "title": "Banana" },
+      { "title": "Frutilla" },
+      { "title": "Frutos rojos" },
+      { "title": "Durazno" },
+      { "title": "Mixto" }
+    ]
+  },
+
+  {
+    "title": "Aguas y gaseosas",
+    "items": [
+      {
+        "title": "Agua"
+      },
+      {
+        "title": "Agua con gas"
+      },
+      {
+        "title": "Agua saborizada"
+      },
+      {
+        "title": "Gaseosas (Línea Coca Cola)"
+      }
+    ]
+  },
+  {
+    "title": "Cervezas",
+    "items": [
+      {
+        "title": "Lata Andes"
+      },
+      {
+        "title": "Lata Heineken"
+      },
+      {
+        "title": "Corona 330cc"
+      },
+      {
+        "title": "Corona 710cc"
+      }
+    ]
+  }
+]

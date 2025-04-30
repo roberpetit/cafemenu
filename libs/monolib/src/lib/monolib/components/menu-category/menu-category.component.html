@@ -1,0 +1,43 @@
+<mat-card #card1 class="transparent">
+  <mat-card-content #card1content>
+    <h2>{{category.title}}</h2>
+    @for (item of category.items; track $index) {
+    <div class="">
+      <mat-card #card2 class="transparent">
+        <mat-card-content #card2content>
+          <div class="row">
+            <div class="col-sm-8">
+              <h3>{{item.title}}</h3>
+            </div>
+            <div class="col-sm-4">
+              <h3>
+                <span>{{item.price | number: '1.0-0': 'es'}}</span>
+                <span>{{ item.price ? '$' : '' }}</span>
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <span>{{item.description}}</span>
+            </div>
+            @if (canEdit) {
+            <div class="col-1 float-right">
+              <button mat-icon-button color="primary" (click)="editItem(item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            <div class="col-1 float-right" >
+              <button mat-icon-button color="warn" (click)="deleteItem(item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <br />
+    </div>
+    }
+
+  </mat-card-content>
+</mat-card>

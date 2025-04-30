@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDivider, MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,8 @@ export interface MenuItem {
 }
 @Component({
   selector: 'app-menu-crm',
-  imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, NewTitleComponent, MatCardModule],
+  imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, NewItemComponent, 
+    NewTitleComponent, MatCardModule],
   templateUrl: './menu-crm.component.html',
   styleUrl: './menu-crm.component.scss',
 })
@@ -32,15 +33,21 @@ export class MenuCrmComponent {
     { icon: '', title: 'Titulo', description: 'Descripcion', price: 10000 },
   ];
   showNewItemForm = false;
+  showNewTitleForm = false;
   editable = false;
   
   addNewItem(): void {
     this.showNewItemForm = true;
   }
 
+  addNewTitle(): void {
+    this.showNewTitleForm = true;
+  }
+
   deleteItem(item: MenuItem): void {
     console.log('Delete item clicked');
   }
+
   editItem(item: MenuItem): void {
     console.log('Edit item clicked');
   }
@@ -51,5 +58,11 @@ export class MenuCrmComponent {
 
     this.showNewItemForm = false;
     console.log('Item added:', item);
+  }
+  
+  onTitleAdded(title: any): void {
+    this.showNewTitleForm = false;
+    
+    console.log('title added:', title);
   }
 }

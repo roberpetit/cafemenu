@@ -40,18 +40,20 @@
     }
   </div>
   <br />
-  @if (!showNewItemForm) {
+  @if (!showNewItemForm && !showNewTitleForm) {
   <div class="row">
-    <div class="col-3">
+    <div class="col-3 ">
       <button mat-raised-button color="primary" (click)="addNewItem()">Agregar nuevo Item</button>
     </div>
-
     <div class="col-3">
-      <button mat-raised-button color="primary" (click)="addNewItem()">Agregar nuevo Titulo</button>
+      <button mat-raised-button color="primary" (click)="addNewTitle()">Agregar nuevo Titulo</button>
     </div>
   </div>
   }
   @if (showNewItemForm) {
-  <lib-new-item (itemAdded)="onItemAdded($event)" />
+    <lib-new-item (itemAdded)="onItemAdded($event)" />
+  }
+  @if (showNewTitleForm) {
+    <lib-new-title (titleAdded)="onTitleAdded($event)" />
   }
 </div>

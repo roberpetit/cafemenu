@@ -1,0 +1,30 @@
+<div class="menu-container">
+    <div class="row menu-header justify-content-center">
+        <div class="col-sm-2 text-center ">
+            <h1>Menu</h1>
+        </div>
+    </div>
+    <br />
+    <div class="row menu-actions justify-content-center">
+        <div class="menu-actions">
+            <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
+            <button mat-raised-button color="warn" (click)="deleteCategory(1)">Delete Category</button>
+        </div>
+    </div>
+    <br />
+
+    <div class="row menu-categories justify-content-center">
+        <div class="col-sm-8">
+            <ng-container *ngIf="menu.length > 0; else noCategories">
+                <ng-container *ngFor="let category of menu; let i = index">
+                    <lib-menu-category [category]="category" [canEdit]="canEdit" (addItem)="addItem(i)"
+                        (removeItem)="removeItem(i, $event)">
+                    </lib-menu-category>
+                </ng-container>
+            </ng-container>
+        </div>
+        <ng-template #noCategories>
+            <p>No categories available.</p>
+        </ng-template>
+    </div>
+</div>
