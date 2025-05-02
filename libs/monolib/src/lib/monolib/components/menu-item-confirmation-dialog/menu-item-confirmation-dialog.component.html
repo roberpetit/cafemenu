@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>¿Eliminar <strong>{{ data.type }}</strong> "{{ data.name }}"?</h2>
+
+<mat-dialog-content>
+  <p>Estás a punto de eliminar esta <strong>{{ data.type }}</strong>. Esta acción no se puede deshacer.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="confirm()">Eliminar</button>
+</mat-dialog-actions>

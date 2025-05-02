@@ -7,19 +7,16 @@
     <br />
     <div class="row menu-actions justify-content-center">
         <div class="menu-actions">
-            <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
-            <button mat-raised-button color="warn" (click)="deleteCategory(1)">Delete Category</button>
+            <button mat-raised-button color="primary" (click)="openAddCategoryDialog()">Add Category</button>
         </div>
     </div>
     <br />
-
     <div class="row menu-categories justify-content-center">
-        <div class="col-sm-8">
+        <div class="col-lg-10 col-md-10 col-sm-12">
             <ng-container *ngIf="menu.length > 0; else noCategories">
                 <ng-container *ngFor="let category of menu; let i = index">
-                    <lib-menu-category [category]="category" [canEdit]="canEdit" (addItem)="addItem(i)"
-                        (removeItem)="removeItem(i, $event)">
-                    </lib-menu-category>
+                    <lib-menu-list [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
+                    (edit)="editCategory(i, $event)" ></lib-menu-list>
                 </ng-container>
             </ng-container>
         </div>
@@ -27,4 +24,5 @@
             <p>No categories available.</p>
         </ng-template>
     </div>
+   
 </div>

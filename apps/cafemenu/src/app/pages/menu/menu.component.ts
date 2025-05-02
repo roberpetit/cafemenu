@@ -3,14 +3,16 @@ import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
+import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { FileService, MenuCategoryComponent } from "@cafemenu-monorepo/monolib";
+import { FileService, MenuListComponent } from "@cafemenu-monorepo/monolib";
 import { MenuCategory } from "@cafemenu-monorepo/monolib";
+import { MenuItemConfirmationDialogComponent } from "libs/monolib/src/lib/monolib/components/menu-item-confirmation-dialog/menu-item-confirmation-dialog.component";
 
 @Component({
     selector: 'app-menu',
-    imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MenuCategoryComponent, MatCardModule],
+    imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
     providers: [FileService],
     standalone: true,
     templateUrl: './menu.component.html',
@@ -21,7 +23,7 @@ export class MenuComponent implements OnInit {
     menu: MenuCategory[] = [];
     canEdit = true; 
 
-    constructor(private readonly fileService: FileService) { }
+    constructor(private readonly fileService: FileService, private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.fileService.getFile('menu-data.json').subscribe((data: MenuCategory[]) => {
@@ -29,21 +31,29 @@ export class MenuComponent implements OnInit {
             console.log(this.menu);
         });
     }
+    
+    openAddCategoryDialog(): void {
+        const dialogRef = this.dialog.open(MenuItemConfirmationDialogComponent, {
+            width: '400px',
+            data: { title: '', items: [] }
+        });
 
-    
-    addItem(index: number) {
-      this.menu[index].items.push({ title: "Nuevo ítem", description: "" });
-    }
-    
-    removeItem(catIndex: number, itemIndex: number) {
-      this.menu[catIndex].items.splice(itemIndex, 1);
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.menu.push(result);
+                this.fileService.saveFile('menu-data.json', this.menu).subscribe(() => {
+                    console.log('Menu updated successfully!');
+                });
+            }
+        });
     }
 
-    addCategory(): void {
-        this.menu.push({ title: "Nueva categoría", items: [] });
-    }
-    
     deleteCategory(index: number): void {
         this.menu.splice(index, 1);
     }
+
+    editCategory(index: number, category: MenuCategory): void {
+        this.menu[index] = category;
+    }
+
 }
