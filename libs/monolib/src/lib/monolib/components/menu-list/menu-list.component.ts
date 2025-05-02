@@ -7,6 +7,7 @@ import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MenuItemConfirmationDialogComponent } from '../menu-item-confirmation-dialog/menu-item-confirmation-dialog.component';
+import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/menu-category-edit-dialog.component';
 
 export interface MenuItem {
   title: string;
@@ -49,6 +50,20 @@ export class MenuListComponent {
     });
   }
 
+  drop(event: CdkDragDrop<MenuItem[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.edit.emit(this.category);    
+  }
+
   openAddNewItemDialog() {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
       width: '400px',
@@ -62,22 +77,7 @@ export class MenuListComponent {
       }
     });
   }
-
-  drop(event: CdkDragDrop<MenuItem[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-    this.edit.emit(this.category);
-    
-  }
-
+  
   openDeleteCategoryDialog() {
     const dialogRef = this.dialog.open(MenuItemConfirmationDialogComponent, {
       data: {
@@ -103,6 +103,19 @@ export class MenuListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.confirmDeleteItem(index);
+      }
+    });
+  }
+
+  openEditCategoryNameDialog() {
+    const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
+      width: '400px',
+      data: { title: this.category.title, isAddMode: false }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.category.title = result.title;
+        this.edit.emit(this.category);
       }
     });
   }

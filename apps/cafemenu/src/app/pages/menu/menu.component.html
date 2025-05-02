@@ -1,13 +1,12 @@
 <div class="menu-container">
     <div class="row menu-header justify-content-center">
-        <div class="col-sm-2 text-center ">
+        <div class="col-3 text-center ">
             <h1>Menu</h1>
         </div>
-    </div>
-    <br />
-    <div class="row menu-actions justify-content-center">
-        <div class="menu-actions">
-            <button mat-raised-button color="primary" (click)="openAddCategoryDialog()">Add Category</button>
+        <div class="d-flex col-1 text-center align-items-center">
+            <button mat-icon-button color="primary" (click)="openAddCategoryDialog()" matTooltip="Agregar Categoria">
+                <mat-icon style="transform: scale(2);">add</mat-icon>
+            </button>
         </div>
     </div>
     <br />
@@ -16,7 +15,7 @@
             <ng-container *ngIf="menu.length > 0; else noCategories">
                 <ng-container *ngFor="let category of menu; let i = index">
                     <lib-menu-list [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
-                    (edit)="editCategory(i, $event)" ></lib-menu-list>
+                    (edit)="editCategory(i, $event)"></lib-menu-list>
                 </ng-container>
             </ng-container>
         </div>
@@ -24,5 +23,5 @@
             <p>No categories available.</p>
         </ng-template>
     </div>
-   
+
 </div>

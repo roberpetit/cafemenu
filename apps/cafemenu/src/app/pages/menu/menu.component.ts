@@ -6,13 +6,13 @@ import { MatCardModule } from "@angular/material/card";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { FileService, MenuListComponent } from "@cafemenu-monorepo/monolib";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { FileService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
 import { MenuCategory } from "@cafemenu-monorepo/monolib";
-import { MenuItemConfirmationDialogComponent } from "libs/monolib/src/lib/monolib/components/menu-item-confirmation-dialog/menu-item-confirmation-dialog.component";
 
 @Component({
     selector: 'app-menu',
-    imports: [CommonModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
+    imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
     providers: [FileService],
     standalone: true,
     templateUrl: './menu.component.html',
@@ -33,14 +33,14 @@ export class MenuComponent implements OnInit {
     }
     
     openAddCategoryDialog(): void {
-        const dialogRef = this.dialog.open(MenuItemConfirmationDialogComponent, {
+        const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
             width: '400px',
-            data: { title: '', items: [] }
+            data: { title: '', isAddMode: true }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.menu.push(result);
+                this.menu.push({ title: result, items: [], opcionales: [] });
                 this.fileService.saveFile('menu-data.json', this.menu).subscribe(() => {
                     console.log('Menu updated successfully!');
                 });

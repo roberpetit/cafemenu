@@ -7,19 +7,19 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'lib-menu-item-edit-dialog',
+  selector: 'lib-menu-category-edit-dialog',
   standalone: true,
   imports: [CommonModule, MatDialogModule, FormsModule, ReactiveFormsModule, MatInputModule, MatButtonModule],
-  templateUrl: './menu-item-edit-dialog.component.html'
+  templateUrl: './menu-category-edit-dialog.component.html'
 })
-export class MenuItemEditDialogComponent {
+export class MenuCategoryEditDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<MenuItemEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { title: string; description: string; price: number, isAddMode?: boolean }
+    public dialogRef: MatDialogRef<MenuCategoryEditDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { title: string, isAddMode?: boolean }
   ) {}
 
   save() {
-    this.dialogRef.close(this.data);
+    this.dialogRef.close(this.data.title);
   }
 
   cancel() {

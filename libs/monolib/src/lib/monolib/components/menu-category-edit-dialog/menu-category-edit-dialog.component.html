@@ -1,23 +1,13 @@
 @if (data.isAddMode) {
-  <h2 mat-dialog-title>Editar ítem</h2>
+  <h2 mat-dialog-title>Agregar Categoría</h2>
 }
 @else {
-  <h2 mat-dialog-title>Agregar ítem</h2>
+  <h2 mat-dialog-title>Editar nombre de Categoría</h2>
 }
 <mat-dialog-content>
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Título</mat-label>
     <input matInput [(ngModel)]="data.title">
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Descripción</mat-label>
-    <input matInput [(ngModel)]="data.description">
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Precio</mat-label>
-    <input matInput type="number" [(ngModel)]="data.price">
   </mat-form-field>
 </mat-dialog-content>
 
