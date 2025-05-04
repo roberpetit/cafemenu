@@ -21,7 +21,7 @@ import { MenuCategory } from "@cafemenu-monorepo/monolib";
 export class MenuComponent implements OnInit {
     
     menu: MenuCategory[] = [];
-    canEdit = true; 
+    canEdit = false; 
 
     constructor(private readonly fileService: FileService, private dialog: MatDialog) { }
 

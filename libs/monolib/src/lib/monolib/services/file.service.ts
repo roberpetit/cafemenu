@@ -1,11 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { MenuCategory } from '../components/menu-list/menu-list.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
+
+  private apiUrl = 'http://localhost:3000/menu';
+
   constructor(private http: HttpClient) {}
 
   getFile(filePath: string): any {
@@ -16,5 +20,14 @@ export class FileService {
     console.log('Saving file:', filePath, data);
     return of(null); 
     //return this.http.post(filePath, data, { responseType: 'text' });
+  }
+
+
+  getMenu(): Observable<MenuCategory[]> {
+    return this.http.get<MenuCategory[]>(this.apiUrl);
+  }
+
+  saveMenu(menu: MenuCategory[]): Observable<any> {
+    return this.http.post(this.apiUrl, menu);
   }
 }

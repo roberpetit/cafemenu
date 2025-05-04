@@ -3,11 +3,13 @@
         <div class="col-3 text-center ">
             <h1>Menu</h1>
         </div>
-        <div class="d-flex col-1 text-center align-items-center">
-            <button mat-icon-button color="primary" (click)="openAddCategoryDialog()" matTooltip="Agregar Categoria">
-                <mat-icon style="transform: scale(2);">add</mat-icon>
-            </button>
-        </div>
+        @if (canEdit) {
+            <div class="d-flex col-1 text-center align-items-center">
+                <button mat-icon-button color="primary" (click)="openAddCategoryDialog()" matTooltip="Agregar Categoria">
+                    <mat-icon style="transform: scale(2);">add</mat-icon>
+                </button>
+            </div>
+        }
     </div>
     <br />
     <div class="row menu-categories justify-content-center">

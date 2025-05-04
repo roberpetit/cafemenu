@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MenuItemConfirmationDialogComponent } from '../menu-item-confirmation-dialog/menu-item-confirmation-dialog.component';
 import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/menu-category-edit-dialog.component';
+import { MenuItemAddToCartDialogComponent } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
 
 export interface MenuItem {
   title: string;
@@ -127,5 +128,18 @@ export class MenuListComponent {
 
   confirmDeleteCategory() {
     this.delete.emit(true);
+  }
+
+  openAddItemToCartDialog(index: number) {
+    const dialogRef = this.dialog.open(MenuItemAddToCartDialogComponent, {
+      width: '400px',
+      data: { ...this.category.items[index], isAddMode: false, quantity: 1 }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.category.items[index] = result;
+      }
+    });
   }
 }

@@ -3,6 +3,7 @@
     <div class="col-lg-8 col-md-8 col-sm-10 d-flex justify-content-center">
       <h2>{{category.title}}</h2>
     </div>
+    @if (canEdit) {
     <div class="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
       <button mat-icon-button color="primary" (click)="openAddNewItemDialog()" matTooltip="Agregar nuevo Item">
         <mat-icon>add</mat-icon>
@@ -10,21 +11,23 @@
       <button mat-icon-button color="primary" (click)="openDeleteCategoryDialog()" matTooltip="Eliminar Categoria">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog()" matTooltip="Editar nombre de Categoria">
+      <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog()"
+        matTooltip="Editar nombre de Categoria">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
+    }
   </div>
 
-  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="category.items" class="example-list"
-    (cdkDropListDropped)="drop($event)">
+  <div cdkDropList [cdkDropListDisabled]="!canEdit" #todoList="cdkDropList" [cdkDropListData]="category.items"
+    class="example-list" (cdkDropListDropped)="drop($event)">
     @for (item of category.items; track item; let idx = $index) {
     <div class="example-box row" cdkDrag>
       <div class="col-lg-8 col-md-8 col-sm-10">
         <h3>{{ item.title }}</h3>
         <p>{{ item.description }}</p>
       </div>
-      <div id="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
+      <div class="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
         <strong class="icons_container">${{ item.price?.toFixed(2) }}</strong>
 
         @if (canEdit) {
@@ -33,6 +36,11 @@
         </button>
         <button mat-icon-button color="primary" (click)="openDeleteItemDialog(idx)" matTooltip="Borrar Item">
           <mat-icon>delete</mat-icon>
+        </button>
+        }
+        @else {
+        <button mat-icon-button color="primary" (click)="openAddItemToCartDialog(idx)" matTooltip="Agregar al carrito">
+          <mat-icon>add</mat-icon>
         </button>
         }
       </div>
