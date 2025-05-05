@@ -5,7 +5,9 @@ import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angul
 import { MenuCategory } from '../components/menu-list/menu-list.component';
 import { doc, updateDoc } from 'firebase/firestore';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CategoryService {
   private categoriesSubject = new BehaviorSubject<MenuCategory[]>([]);
   categories$ = this.categoriesSubject.asObservable();

@@ -28,5 +28,7 @@ export class AuthService  {
         signOut(this.auth).then(() => console.log('Desconectado'));
     }
     
-
+    getDisplayName(): string {
+        return this.userSubject.value?.displayName || this.userSubject.value?.email || '';
+    }
 }

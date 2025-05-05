@@ -7,13 +7,14 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { ActivatedRoute } from "@angular/router";
 import { AuthService, CategoryService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
 import { MenuCategory } from "@cafemenu-monorepo/monolib";
 
 @Component({
     selector: 'app-menu',
     imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
-    providers: [CategoryService],
+    providers: [],
     standalone: true,
     templateUrl: './menu.component.html',
     styleUrl: './menu.component.scss',
@@ -23,11 +24,21 @@ export class MenuComponent implements OnInit, OnDestroy {
     menu: MenuCategory[] = [];
     canEdit = false; 
     subscription: any;
+    navigateTo = '';
 
-    constructor(private dialog: MatDialog, private categoryService: CategoryService, private authService: AuthService) { 
+    constructor(private dialog: MatDialog, private categoryService: CategoryService, private authService: AuthService,
+        private activatedRoute: ActivatedRoute
+    ) { 
     }
 
     ngOnInit(): void {
+        this.activatedRoute.params.subscribe((params) => {
+            if (params['pagina']) {
+              this.navigateTo = params['pagina'];
+              this.scrollTo(this.navigateTo);
+            }
+          });
+
         this.subscription = this.authService.user$.subscribe((user) => {
             if (user) {
                 this.canEdit = true;
@@ -91,4 +102,13 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
         // this.categoryService.categories$.unsubscribe();        
     }
+
+    scrollTo(id: string) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: "end", inline: "nearest" });
+        } else {
+          console.error(`Element with id ${id} not found`);
+        }
+      }
 }

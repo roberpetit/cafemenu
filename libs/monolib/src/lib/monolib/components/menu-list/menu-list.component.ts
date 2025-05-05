@@ -11,6 +11,7 @@ import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/me
 import { MenuItemAddToCartDialogComponent } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
 
 export interface MenuItem {
+  id: number;
   title: string;
   description?: string;
   price?: number;

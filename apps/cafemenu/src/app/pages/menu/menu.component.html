@@ -16,7 +16,7 @@
         <div class="col-lg-10 col-md-10 col-sm-12">
             <ng-container *ngIf="menu.length > 0; else noCategories">
                 <ng-container *ngFor="let category of menu; let i = index">
-                    <lib-menu-list [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
+                    <lib-menu-list [id]="category.id" [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
                     (edit)="editCategory(i, $event)"></lib-menu-list>
                 </ng-container>
             </ng-container>

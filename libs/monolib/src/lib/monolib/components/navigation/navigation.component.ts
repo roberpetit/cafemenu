@@ -12,6 +12,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../services/auth.service';
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'lib-navigation',
@@ -36,7 +37,7 @@ export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
   theme;
   
-  constructor(private readonly themeService: ThemeService, public auth: AuthService) {
+  constructor(private readonly themeService: ThemeService, public auth: AuthService, public categoryService: CategoryService) {
     this.theme = this.themeService.theme;
   }
 
@@ -65,4 +66,5 @@ export class NavigationComponent {
   logout(): void {
     this.auth.logout()
   }
+
 }

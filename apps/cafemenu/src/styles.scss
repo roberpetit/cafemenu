@@ -47,7 +47,7 @@ html, body {
 
 body { 
   margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  font-family: Montserrat, sans-serif; 
   @include mat.all-component-themes($angular-material-3-theme-light);
   @include mat.sidenav-overrides((
     content-background-color: transparent,
@@ -93,4 +93,20 @@ body {
 
 .mat-drawer-container {
   overflow-y: hidden;
+}
+
+$color1: #052C48;
+$color2: #695842;
+$color3: #E5E4E4;
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: $color2;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: regular;
+  color: $color1;
 }

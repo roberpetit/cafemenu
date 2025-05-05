@@ -7,4 +7,5 @@ export const appRoutes: Route[] = [
     { path: 'menu', component: ImgMenuComponent },
     { path: 'menu/:pagina', component: ImgMenuComponent },
     { path: 'cafe', component: MenuComponent },
+    { path: 'cafe/:pagina', component: MenuComponent },
 ];

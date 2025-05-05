@@ -1,0 +1,22 @@
+<div class="cart-preview" *ngIf="cartItems.length > 0">
+    <h3>🛒 Cart Preview</h3>
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <div>
+        <strong>{{ item.item.title }}</strong> <br />
+        <small *ngIf="item.optionalSelections.length">
+          + {{ item.optionalSelections.join(', ') }}
+        </small>
+      </div>
+      <div class="actions">
+        <input type="number" min="1" [value]="item.quantity" (change)="onQuantityChange(item.item.id, item.quantity)" />
+        <button (click)="remove(item.item.id)">🗑️</button>
+      </div>
+      <div>
+        {{ (item.item.price || 0) * item.quantity | currency }}
+      </div>
+    </div>
+    <div class="total">
+      <strong>Total:</strong>
+      {{ getTotal() | currency }}
+    </div>
+  </div>
