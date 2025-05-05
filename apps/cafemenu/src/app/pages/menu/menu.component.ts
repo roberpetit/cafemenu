@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -7,37 +7,41 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { CategoryService, FileService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
+import { AuthService, CategoryService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
 import { MenuCategory } from "@cafemenu-monorepo/monolib";
 
 @Component({
     selector: 'app-menu',
     imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
-    providers: [FileService],
+    providers: [CategoryService],
     standalone: true,
     templateUrl: './menu.component.html',
     styleUrl: './menu.component.scss',
   })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
     
     menu: MenuCategory[] = [];
-    canEdit = true; 
+    canEdit = false; 
+    subscription: any;
 
-    constructor(private readonly fileService: FileService, private dialog: MatDialog, private categoryService: CategoryService) { }
+    constructor(private dialog: MatDialog, private categoryService: CategoryService, private authService: AuthService) { 
+    }
 
     ngOnInit(): void {
-        this.fileService.getFile('menu-data.json').subscribe((data: MenuCategory[]) => {
+        this.subscription = this.authService.user$.subscribe((user) => {
+            if (user) {
+                this.canEdit = true;
+            } else {
+                this.canEdit = false;
+            }
+        });
+        //this.fileService.getFile('menu-data.json').subscribe((data: MenuCategory[]) => {
             //this.menu = data;
-            console.log(this.menu);
-        });
-
-        this.fileService.getMenu().subscribe((data: MenuCategory[]) => {
-            this.menu = data;
-            console.log("Response from firebase", data);
-        });
+          //  console.log(this.menu);
+        //});
 
         this.categoryService.categories$.subscribe((categories) => {
-            console.log('Categories from service:', categories);
+            this.menu = categories;
         });
     }
     
@@ -49,23 +53,42 @@ export class MenuComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.menu.push({ title: result, items: [], opcionales: [] });
-                this.fileService.saveFile('menu-data.json', this.menu).subscribe(() => {
-                    console.log('Menu updated successfully!');
+                //this.menu.push({ title: result, items: [], opcionales: [] });
+                this.categoryService.addCategory({ title: result, items: [], opcionales: [] }).then((response) => {
+                    console.log('Category added successfully!', response);
+                }
+                , (error) => {
+                    console.error('Error adding category:', error);
                 });
             }
         });
     }
 
     deleteCategory(index: number): void {
-        this.menu.splice(index, 1);
-        //update the menu in the file ?
+        this.categoryService.deleteCategory(this.menu[index].id || '').then((response) => {
+            //this.menu.splice(index, 1);
+            console.log('Category deleted successfully!', response);
+        }
+        , (error) => {
+            console.error('Error deleting category:', error);
+        }
+        );
     }
 
     editCategory(index: number, category: MenuCategory): void {
         console.log('Editing category:', category);
-        this.menu[index] = category;
-        //update the menu in the file ?
+        //this.menu[index] = category;
+        
+        this.categoryService.editCategory(category.id || '', category).then((response) => {
+            console.log('Category updated successfully!', response);
+        }, (error) => {
+            console.error('Error adding category:', error);
+        });
     }
 
+    ngOnDestroy(): void {
+        // Unsubscribe from any subscriptions if necessary
+        this.subscription.unsubscribe();
+        // this.categoryService.categories$.unsubscribe();        
+    }
 }

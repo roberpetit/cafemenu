@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
+import { AuthService } from '../../services/auth.service';
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
   selector: 'lib-navigation',
@@ -26,17 +28,19 @@ import { ThemeService } from '../../services/theme.service';
     RouterOutlet,
     RouterLink,
     CommonModule,
-  ]
+    MatTooltipModule,
+  ],
+  providers: [ThemeService]
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
   theme;
-  constructor(private readonly themeService: ThemeService) {
+  
+  constructor(private readonly themeService: ThemeService, public auth: AuthService) {
     this.theme = this.themeService.theme;
   }
 
   instaClick(): void {
-    console.log('changeTheme called');
     window.open('https://www.instagram.com/santoscafe___/?hl=es', "_blank");
   }
 
@@ -45,7 +49,6 @@ export class NavigationComponent {
     map(result => result.matches),
     shareReplay()
   );
-
   
   onThemeChange(): void {
     if (this.themeService.theme() === 'color-scheme-dark') {
@@ -53,5 +56,13 @@ export class NavigationComponent {
     } else {
       this.themeService.theme.set('color-scheme-dark');
     }
+  }
+
+  login(): void {
+    this.auth.loginWithGoogle()
+  }
+  
+  logout(): void {
+    this.auth.logout()
   }
 }

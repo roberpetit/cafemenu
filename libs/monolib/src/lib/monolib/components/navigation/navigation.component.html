@@ -20,7 +20,17 @@
       </button>
     }
     -->
-  
+  @if (auth.user$ | async) {
+    <button mat-icon-button (click)="logout()" matTooltip="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  }
+  @else {
+    <button mat-icon-button (click)="login()" matTooltip="Login">
+      <mat-icon>login</mat-icon>
+    </button>
+  }
+
   <button color="warn" mat-icon-button aria-label="heart icon">
     <mat-icon>print</mat-icon>
   </button>

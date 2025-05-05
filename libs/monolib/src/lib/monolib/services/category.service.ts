@@ -1,10 +1,11 @@
 // category.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, collectionData, doc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angular/fire/firestore';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
+import { doc, updateDoc } from 'firebase/firestore';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CategoryService {
   private categoriesSubject = new BehaviorSubject<MenuCategory[]>([]);
   categories$ = this.categoriesSubject.asObservable();
@@ -27,12 +28,18 @@ export class CategoryService {
     return this.categoriesSubject.getValue();
   }
 
-  async updateCategory(categoryId: string, updatedCategory: Partial<MenuCategory>) {
-    const docRef = doc(this.firestore, 'menu', categoryId);
-    await updateDoc(docRef, updatedCategory);
+  addCategory(category: MenuCategory): Promise<any> {
+    const menuRef = collection(this.firestore, 'menu');
+    return addDoc(menuRef, category);
   }
 
-  async updateCategoryItems(categoryId: string, items: any[]) {
-    return this.updateCategory(categoryId, { items });
+  editCategory(categoryId: string, category: any): Promise<any> {
+    const docRef = doc(this.firestore, `menu/${categoryId}`);
+    return updateDoc(docRef, category);
+  }
+
+  deleteCategory(categoryId: string) {
+    const docRef = doc(this.firestore, `menu/${categoryId}`);
+    return deleteDoc(docRef);
   }
 }
