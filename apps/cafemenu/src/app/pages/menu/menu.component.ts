@@ -7,7 +7,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { FileService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
+import { CategoryService, FileService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
 import { MenuCategory } from "@cafemenu-monorepo/monolib";
 
 @Component({
@@ -21,14 +21,23 @@ import { MenuCategory } from "@cafemenu-monorepo/monolib";
 export class MenuComponent implements OnInit {
     
     menu: MenuCategory[] = [];
-    canEdit = false; 
+    canEdit = true; 
 
-    constructor(private readonly fileService: FileService, private dialog: MatDialog) { }
+    constructor(private readonly fileService: FileService, private dialog: MatDialog, private categoryService: CategoryService) { }
 
     ngOnInit(): void {
         this.fileService.getFile('menu-data.json').subscribe((data: MenuCategory[]) => {
-            this.menu = data;
+            //this.menu = data;
             console.log(this.menu);
+        });
+
+        this.fileService.getMenu().subscribe((data: MenuCategory[]) => {
+            this.menu = data;
+            console.log("Response from firebase", data);
+        });
+
+        this.categoryService.categories$.subscribe((categories) => {
+            console.log('Categories from service:', categories);
         });
     }
     
@@ -50,10 +59,13 @@ export class MenuComponent implements OnInit {
 
     deleteCategory(index: number): void {
         this.menu.splice(index, 1);
+        //update the menu in the file ?
     }
 
     editCategory(index: number, category: MenuCategory): void {
+        console.log('Editing category:', category);
         this.menu[index] = category;
+        //update the menu in the file ?
     }
 
 }

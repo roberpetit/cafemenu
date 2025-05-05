@@ -17,6 +17,7 @@ export interface MenuItem {
 }
 
 export interface MenuCategory {
+  id?: string;
   title: string;
   items: MenuItem[];
   opcionales?: MenuItem[];
@@ -47,6 +48,7 @@ export class MenuListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.category.items[index] = result;
+        this.edit.emit(this.category);
       }
     });
   }
@@ -142,4 +144,5 @@ export class MenuListComponent {
       }
     });
   }
+  
 }

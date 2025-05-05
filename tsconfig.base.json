@@ -18,5 +18,12 @@
       "@cafemenu-monorepo/monolib": ["libs/monolib/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "include": [
+    "apps/**/*",
+    "libs/**/*"
+  ],
+  "exclude": ["node_modules", "tmp"],
+  "ts-node": {
+    "esm": true
+  }
 }

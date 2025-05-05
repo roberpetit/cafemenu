@@ -1,0 +1,58 @@
+{
+  "name": "cafe-backend",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "cafe-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/cafe-backend",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "cafe-backend/src/main.ts",
+        "tsConfig": "cafe-backend/tsconfig.app.json",
+        "assets": ["cafe-backend/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "cafe-backend:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "cafe-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "cafe-backend:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
