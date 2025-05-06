@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'; 
+import { Injectable, OnDestroy } from '@angular/core'; 
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Auth, GoogleAuthProvider, signInWithPopup, signOut } from '@angular/fire/auth';
@@ -7,7 +7,7 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 @Injectable({
     providedIn: 'root',
 })
-export class AuthService  {
+export class AuthService implements OnDestroy {
     
     private userSubject = new BehaviorSubject<User | null>(null); 
     user$ = this.userSubject.asObservable();
@@ -21,9 +21,14 @@ export class AuthService  {
             if (user) {
                 this.checkAdminStatus(user);
             } else {
+                this.userSubject.next(null);
                 this.isAdminSubject.next(false);
             }
         });
+    }
+
+    ngOnDestroy(): void {
+        this.logout();
     }
       
     private async checkAdminStatus(user: User) {
@@ -60,5 +65,9 @@ export class AuthService  {
 
     isAdmin(): boolean {
         return this.isAdminSubject.value;
+    }
+
+    getUser(): User | null {
+        return this.userSubject.value;
     }
 }

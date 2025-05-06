@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MenuItemConfirmationDialogComponent } from '../menu-item-confirmation-dialog/menu-item-confirmation-dialog.component';
 import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/menu-category-edit-dialog.component';
-import { MenuItemAddToCartDialogComponent } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
+import { MenuItemAddToCartDialogComponent, MenuItemAddToCartDialogData } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
+import { CartService } from '../../services/cart.service';
 
 export interface MenuItem {
   id: string;
@@ -38,7 +39,7 @@ export class MenuListComponent {
   @Output() delete = new EventEmitter<boolean>();
   @Output() edit = new EventEmitter<MenuCategory>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private cartService: CartService) {}
 
   openEditItemDialog(index: number) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
@@ -134,14 +135,22 @@ export class MenuListComponent {
   }
 
   openAddItemToCartDialog(index: number) {
+    const menuItemAddToCartDialogData: MenuItemAddToCartDialogData = {
+      item: this.category.items[index],
+      isAddMode: false,
+      quantity: 1
+    };
+
     const dialogRef = this.dialog.open(MenuItemAddToCartDialogComponent, {
       width: '400px',
-      data: { ...this.category.items[index], isAddMode: false, quantity: 1 }
+      data: menuItemAddToCartDialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: MenuItemAddToCartDialogData) => {
       if (result) {
-        this.category.items[index] = result;
+        this.cartService.addItem(result.item, result.quantity || 1);
+        // this.category.items[index] = result.item; // add badge of amount in cart
+
       }
     });
   }

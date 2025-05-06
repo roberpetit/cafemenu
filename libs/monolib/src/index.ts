@@ -9,3 +9,4 @@ export * from './lib/monolib/components/menu-item-edit-dialog/menu-item-edit-dia
 export * from './lib/monolib/components/menu-category-edit-dialog/menu-category-edit-dialog.component';
 export * from './lib/monolib/components/admin-tools/admin-tools.component';
 export * from './lib/monolib/components/menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
+export * from './lib/monolib/components/cart-preview/cart-preview.component';

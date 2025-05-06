@@ -1,22 +1,62 @@
-<div class="cart-preview" *ngIf="cartItems.length > 0">
-    <h3>🛒 Cart Preview</h3>
-    <div *ngFor="let item of cartItems" class="cart-item">
-      <div>
-        <strong>{{ item.item.title }}</strong> <br />
-        <small *ngIf="item.optionalSelections.length">
-          + {{ item.optionalSelections.join(', ') }}
-        </small>
-      </div>
-      <div class="actions">
-        <input type="number" min="1" [value]="item.quantity" (change)="onQuantityChange(item.item.id, item.quantity)" />
-        <button (click)="remove(item.item.id)">🗑️</button>
-      </div>
-      <div>
-        {{ (item.item.price || 0) * item.quantity | currency }}
-      </div>
-    </div>
-    <div class="total">
-      <strong>Total:</strong>
-      {{ getTotal() | currency }}
-    </div>
+<div class="cart-preview card shadow-sm p-3" *ngIf="cartItems.length > 0">
+  <div class="text-center mb-3">
+    <h2>Carrito</h2>
   </div>
+
+  <div cdkDropList [cdkDropListData]="cartItems" class="example-list">
+    @for (item of cartItems; track item; let idx = $index) {
+      <div class="example-box row align-items-center py-2 px-2" cdkDrag>
+        <!-- Title and price -->
+        <div class="col-12 col-md-6">
+          <div>
+            <strong>{{ item.item.title }}</strong>
+          </div>
+          <div class="text-muted small">
+            {{ item.item.price | currency }}
+          </div>
+        </div>
+
+        <!-- Quantity controls and delete -->
+        <div class="col-12 col-md-6 d-flex justify-content-end align-items-center mt-2 mt-md-0">
+          <div class="d-flex align-items-center gap-2">
+            <div class="input-group input-group-sm" style="max-width: 190px;">
+              <button mat-icon-button color="primary" (click)="changeQty(item.item.id, item.quantity - 1)" [disabled]="item.quantity <= 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <mat-form-field appearance="outline" style="width: 70px; margin: 0;">
+                <input matInput type="number" [value]="item.quantity" (change)="onQuantityChange(item.item.id, $event)" />
+              </mat-form-field>
+              <button mat-icon-button color="primary" (click)="changeQty(item.item.id, item.quantity + 1)" [disabled]="item.quantity >= 1000">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="remove(item.item.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Observations -->
+  <div class="mt-3 ">
+
+    <mat-form-field class="full-width">
+      <mat-label>Observaciones</mat-label>
+      <textarea matInput placeholder="Observaciones..." [(ngModel)]="observations"></textarea>
+    </mat-form-field>
+
+  </div>
+
+  <div class="cart-summary mt-3 d-flex justify-content-end align-items-center">
+    <!-- Total amount displayed -->
+    <div class="fw-bold me-3">
+      <h4>Total: {{ getTotal() | currency }}</h4>
+    </div>
+    
+    <button mat-raised-button color="primary btn-confirm" (click)="confirmCart()">Confirmar compra</button>
+  <!-- Confirm button -->
+  </div>
+</div>

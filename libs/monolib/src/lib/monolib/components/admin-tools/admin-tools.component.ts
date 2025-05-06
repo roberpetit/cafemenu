@@ -6,10 +6,11 @@ import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { CartPreviewComponent } from '../cart-preview/cart-preview.component';
 
 @Component({
   selector: 'lib-admin-tools',
-  imports: [CommonModule, MatSnackBarModule, MatCardModule, MatButtonModule,
+  imports: [CommonModule, MatSnackBarModule, MatCardModule, MatButtonModule, CartPreviewComponent
   ],
   templateUrl: './admin-tools.component.html',
   styleUrl: './admin-tools.component.scss',

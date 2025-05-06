@@ -5,7 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MenuItem } from '../menu-list/menu-list.component';
 
+export interface MenuItemAddToCartDialogData 
+  { 
+    item: MenuItem, 
+    isAddMode?: boolean,
+    quantity?: number
+   }
 @Component({
   selector: 'lib-menu-item-add-to-cart-dialog',
   standalone: true,
@@ -15,10 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 export class MenuItemAddToCartDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<MenuItemAddToCartDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { title: string; description: string; price: number, isAddMode?: boolean,
-      quantity?: number
-     }
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: MenuItemAddToCartDialogData) {}
 
   save() {
     this.dialogRef.close(this.data);

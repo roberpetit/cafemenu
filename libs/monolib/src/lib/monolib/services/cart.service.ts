@@ -3,21 +3,22 @@
 export interface CartItem {
   item: MenuItem;
   quantity: number;
-  optionalSelections: string[];
+  optionalSelections?: string[];
+  observations?: string; 
 }
   
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
-import { Auth } from '@angular/fire/auth';
 import { MenuItem } from '../components/menu-list/menu-list.component';
+import { AuthService } from './auth.service';
   
 @Injectable({ providedIn: 'root' })
 export class CartService {
     private cartKey = 'local_cart';
     private cart$ = new BehaviorSubject<CartItem[]>([]);
   
-    constructor(private firestore: Firestore, private auth: Auth) {
+    constructor(private firestore: Firestore, private authService: AuthService) {
       this.loadCart();
     }
   
@@ -26,7 +27,7 @@ export class CartService {
     }
   
     private async loadCart() {
-      const user = this.auth.currentUser;
+      const user = this.authService.getUser();
       if (user) {
         const docRef = doc(this.firestore, 'carts', user.uid);
         const snap = await getDoc(docRef);
@@ -42,7 +43,7 @@ export class CartService {
   
     private async saveCart(cart: CartItem[]) {
       this.cart$.next(cart);
-      const user = this.auth.currentUser;
+      const user = this.authService.getUser();
       if (user) {
         const docRef = doc(this.firestore, 'carts', user.uid);
         await setDoc(docRef, { items: cart });
@@ -51,13 +52,13 @@ export class CartService {
       }
     }
   
-    addItem(item: MenuItem, optionalSelections: string[] = []) {
+    addItem(item: MenuItem, quantity: number) {
       const current = this.cart$.value;
       const index = current.findIndex(c => c.item.title === item.title);
       if (index > -1) {
-        current[index].quantity++;
+        current[index].quantity+= quantity;
       } else {
-        current.push({ item, quantity: 1, optionalSelections });
+        current.push({ item, quantity: quantity });
       }
       this.saveCart(current);
     }
