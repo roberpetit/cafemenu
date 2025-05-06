@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 export class MenuItemEditDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<MenuItemEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { title: string; description: string; price: number, isAddMode?: boolean }
+    @Inject(MAT_DIALOG_DATA) public data: { title: string; description: string; price: number, id: string, isAddMode?: boolean }
   ) {}
 
   save() {

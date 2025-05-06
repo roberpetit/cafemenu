@@ -1,17 +1,43 @@
-import { inject, Injectable } from '@angular/core'; 
-import { User } from 'firebase/auth';
+import { Injectable } from '@angular/core'; 
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Auth, GoogleAuthProvider, signInWithPopup, signOut } from '@angular/fire/auth';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService  {
     
-    private auth = inject(Auth);
     private userSubject = new BehaviorSubject<User | null>(null); 
     user$ = this.userSubject.asObservable();
+
+    private isAdminSubject = new BehaviorSubject<boolean>(false);
+    isAdmin$ = this.isAdminSubject.asObservable();
+      
+    constructor(private firestore: Firestore, private auth: Auth) {
+        onAuthStateChanged(this.auth, (user) => {
+            console.log('Auth state changed:', user);
+            if (user) {
+                this.checkAdminStatus(user);
+            } else {
+                this.isAdminSubject.next(false);
+            }
+        });
+    }
+      
+    private async checkAdminStatus(user: User) {
+        const adminDocRef = doc(this.firestore, 'config', 'admins');
+        const adminSnap = await getDoc(adminDocRef);
     
+        if (adminSnap.exists()) {
+            const uids = adminSnap.data()['uids'];
+            this.isAdminSubject.next(Array.isArray(uids) && uids.includes(user.uid));
+        } else {
+            this.isAdminSubject.next(false);
+        }
+    }
+      
     loginWithGoogle() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(this.auth, provider)
@@ -30,5 +56,9 @@ export class AuthService  {
     
     getDisplayName(): string {
         return this.userSubject.value?.displayName || this.userSubject.value?.email || '';
+    }
+
+    isAdmin(): boolean {
+        return this.isAdminSubject.value;
     }
 }

@@ -1,0 +1,12 @@
+<mat-card class="admin-tools-card">
+    <div class="d-flex justify-content-center">
+        <h2>Admin Tools</h2>
+    </div>
+    <div class="d-flex justify-content-center">
+        @if (isAdmin) {
+        <button mat-raised-button color="primary" (click)="reload()">Re-upload categories</button>
+        <button mat-raised-button color="accent" (click)="downloadCategories()">Download categories</button>
+        }
+        <button mat-stroked-button disabled>Manage admins (soon)</button>
+    </div>
+</mat-card>

@@ -1,4 +1,5 @@
 <mat-toolbar class="color-scheme-dark" fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
+
   @if (isHandset$ | async) {
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -7,8 +8,8 @@
   <span>Santos Cafe</span>
 
   <span class="menu-spacer"></span>
+  <!-- 
   <span class="spacer"></span>
-  <!--
     @if (theme() !== 'color-scheme-light') {
       <button mat-icon-button (click)="onThemeChange()">
         <mat-icon>light_mode</mat-icon>
@@ -21,7 +22,12 @@
     }
     -->
   @if (auth.user$ | async) {
-    <span>{{ auth.getDisplayName() }}</span>
+    @if (auth.isAdmin$ | async) {
+      <span [routerLink]="'admin'">{{ auth.getDisplayName() }}</span>
+    }
+    @else {
+      <span>{{ auth.getDisplayName() }}</span>
+    }
     
     <button mat-icon-button (click)="logout()" matTooltip="Logout">
       <mat-icon>logout</mat-icon>
@@ -51,7 +57,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container" cdkScrollable>
-  <mat-sidenav #drawer class="sidenav color-scheme-dark" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  <mat-sidenav #drawer class="sidenav " [ngClass]="theme()" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <div>
       <mat-toolbar class="sidenav-header" color="primary">

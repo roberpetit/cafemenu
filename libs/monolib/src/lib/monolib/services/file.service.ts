@@ -3,12 +3,17 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { addDoc, doc, getDocs, setDoc } from 'firebase/firestore';
+import { addDoc, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FileService {
 
-  constructor(private http: HttpClient, private firestore: Firestore) {}
+  constructor(private http: HttpClient, private firestore: Firestore,
+    private snackBar: MatSnackBar
+  ) {}
 
   getFile(filePath: string): any {
     return this.http.get(filePath);
@@ -43,13 +48,39 @@ export class FileService {
         await setDoc(docRef, category); // sobrescribe todo el doc
         console.log(`Categoria actualizada: ${category.title}`);
       } else {
-        // ➕ Agregar nueva
+        // Agregar nueva
         await addDoc(menuCollection, category);
         console.log(`Categoria agregada: ${category.title}`);
       }
     }
   
+    this.snackBar.open('Categories re-uploaded!', 'Close', { duration: 3000 });
     console.log('Sincronización de menú completa');
+  }
+
+  async deleteAllAndReUploadFromJsonFile() {
+    const data: any[] = await firstValueFrom(this.http.get<any[]>('menu-data.json'));
+    const menuCollection = collection(this.firestore, 'menu');
+  
+    // Eliminar todos los documentos existentes
+    const existingDocs = await getDocs(menuCollection);
+    const deletePromises = existingDocs.docs.map(docSnap => deleteDoc(docSnap.ref));
+    await Promise.all(deletePromises);
+    console.log('Todos los documentos anteriores eliminados');
+  
+    // Agregar los nuevos
+    for (const category of data) {
+      category.items = category.items.map((item: any) => ({
+        ...item,
+        id: crypto.randomUUID()
+      }));
+  
+      const docRef = doc(menuCollection, crypto.randomUUID());
+      await setDoc(docRef, category);
+    }
+
+    console.log('Categorías actualizadas con IDs únicos por ítem');
+    
   }
 
 }

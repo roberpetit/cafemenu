@@ -1,19 +1,19 @@
 
   
-  export interface CartItem {
-    item: MenuItem;
-    quantity: number;
-    optionalSelections: string[];
-  }
+export interface CartItem {
+  item: MenuItem;
+  quantity: number;
+  optionalSelections: string[];
+}
   
-  import { Injectable } from '@angular/core';
-  import { BehaviorSubject } from 'rxjs';
-  import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
-  import { Auth } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 import { MenuItem } from '../components/menu-list/menu-list.component';
   
-  @Injectable({ providedIn: 'root' })
-  export class CartService {
+@Injectable({ providedIn: 'root' })
+export class CartService {
     private cartKey = 'local_cart';
     private cart$ = new BehaviorSubject<CartItem[]>([]);
   
@@ -62,7 +62,7 @@ import { MenuItem } from '../components/menu-list/menu-list.component';
       this.saveCart(current);
     }
   
-    removeItem(itemId: number) {
+    removeItem(itemId: string) {
       const updated = this.cart$.value.filter(c => c.item.id !== itemId);
       this.saveCart(updated);
     }
@@ -71,7 +71,7 @@ import { MenuItem } from '../components/menu-list/menu-list.component';
       this.saveCart([]);
     }
   
-    updateQuantity(itemId: number, quantity: number) {
+    updateQuantity(itemId: string, quantity: number) {
       const cart = this.cart$.value.map(c =>
         c.item.id === itemId ? { ...c, quantity } : c
       );

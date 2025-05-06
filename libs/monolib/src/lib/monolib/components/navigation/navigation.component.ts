@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, WritableSignal } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -30,14 +30,15 @@ import { CategoryService } from '../../services/category.service';
     RouterLink,
     CommonModule,
     MatTooltipModule,
-  ],
-  providers: [ThemeService]
+],
+  providers: [ThemeService ]
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
-  theme;
+  theme: WritableSignal<string>;
   
-  constructor(private readonly themeService: ThemeService, public auth: AuthService, public categoryService: CategoryService) {
+  constructor(private readonly themeService: ThemeService, public auth: AuthService, public categoryService: CategoryService,
+  ) {
     this.theme = this.themeService.theme;
   }
 

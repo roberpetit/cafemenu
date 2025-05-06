@@ -11,7 +11,7 @@ import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/me
 import { MenuItemAddToCartDialogComponent } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
 
 export interface MenuItem {
-  id: number;
+  id: string;
   title: string;
   description?: string;
   price?: number;
@@ -71,7 +71,7 @@ export class MenuListComponent {
   openAddNewItemDialog() {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
       width: '400px',
-      data: { title: '', description: '', price: 0, isAddMode: true }
+      data: { title: '', description: '', price: 0, id: crypto.randomUUID(), isAddMode: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
