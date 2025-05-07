@@ -31,12 +31,10 @@ export class CartPreviewComponent implements OnInit {
   }
 
   onQuantityChange(itemId: string, eventQuantity?: any) {
-    console.log('onQuantityChange', itemId, eventQuantity);
     if (eventQuantity.target.valueAsNumber && eventQuantity.target.valueAsNumber > 0 && this.cartItems.find(item => item.item.id === itemId)) {
       const item = this.cartItems.find(cartItem => cartItem.item.id === itemId);
       if (item) {
         item.quantity = eventQuantity.target.valueAsNumber;
-        console.log('item', item);
       }
       this.cartService.updateQuantity(itemId, eventQuantity.target.valueAsNumber);
     }
@@ -84,8 +82,36 @@ export class CartPreviewComponent implements OnInit {
     }
   }
 
-  confirmCart(): void {
-    console.log('confirmCart', this.cartItems);
+  confirmCart() {
+    const lines: string[] = [];
+  
+    lines.push('*Pedido Cafetería*');
+    lines.push('');
+    for (const item of this.cartItems) {
+      const line = `• ${item.quantity} x ${item.item.title} - ${this.currencyFormat(item.item.price || 0 * item.quantity)}`;
+      lines.push(line);
+      if (item.optionalSelections?.length) {
+        lines.push(`  (${item.optionalSelections.join(', ')})`);
+      }
+    }
+  
+    if (this.observations?.trim()) {
+      lines.push('');
+      lines.push(`*Observaciones:* ${this.observations.trim()}`);
+    }
+  
+    lines.push('');
+    lines.push(`*Total: ${this.currencyFormat(this.getTotal())}*`);
+  
+    const message = encodeURIComponent(lines.join('\n'));
+    const phone = '1131381102'; // 
+    const whatsappURL = `https://wa.me/${phone}?text=${message}`;
+  
+    window.open(whatsappURL, '_blank');
+  }
+  
+  currencyFormat(amount: number): string {
+    return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount);
   }
 }
 
