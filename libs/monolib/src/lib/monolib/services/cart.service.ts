@@ -20,6 +20,14 @@ export class CartService {
   
     constructor(private firestore: Firestore, private authService: AuthService) {
       this.loadCart();
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.loadCart();
+        } else {
+          const local = localStorage.getItem(this.cartKey);
+          this.cart$.next(local ? JSON.parse(local) : []);
+        }
+      });
     }
   
     getCart() {
@@ -39,6 +47,7 @@ export class CartService {
       // fallback to localStorage
       const local = localStorage.getItem(this.cartKey);
       this.cart$.next(local ? JSON.parse(local) : []);
+      console.log('No cart found in Firestore, using local storage, should save to firestore?', this.cart$.value);
     }
   
     private async saveCart(cart: CartItem[]) {

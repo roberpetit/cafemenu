@@ -37,6 +37,9 @@
         <button mat-icon-button color="primary" (click)="openDeleteItemDialog(idx)" matTooltip="Borrar Item">
           <mat-icon>delete</mat-icon>
         </button>
+        <button mat-icon-button color="primary" (click)="openAddItemToCartDialog(idx)" matTooltip="Agregar al carrito">
+          <mat-icon>add</mat-icon>
+        </button>
         }
         @else {
         <button mat-icon-button color="primary" (click)="openAddItemToCartDialog(idx)" matTooltip="Agregar al carrito">

@@ -17,7 +17,6 @@ export class AuthService implements OnDestroy {
       
     constructor(private firestore: Firestore, private auth: Auth) {
         onAuthStateChanged(this.auth, (user) => {
-            console.log('Auth state changed:', user);
             if (user) {
                 this.checkAdminStatus(user);
             } else {
@@ -48,11 +47,23 @@ export class AuthService implements OnDestroy {
         signInWithPopup(this.auth, provider)
           .then(result => {
             const user = result.user;
-            console.log('Usuario conectado:', result);
+            this.updateCart(user.uid);
             this.userSubject.next(user);
           })
           .catch(err => console.error('Error login:', err));
       }
+
+      updateCart(uid: string) {
+        const cartRef = doc(this.firestore, 'carts', uid);
+        getDoc(cartRef).then((docSnap) => {
+            if (!docSnap.exists()) {
+                // Si el carrito no existe, puedes crear uno nuevo o manejarlo como desees
+                console.log('Carrito no existe, creando uno nuevo...');
+            } else {
+                console.log('Carrito ya existe:', docSnap.data());
+            }
+        });
+    }
 
     logout() {
         this.userSubject.next(null);
@@ -60,7 +71,7 @@ export class AuthService implements OnDestroy {
     }
     
     getDisplayName(): string {
-        return this.userSubject.value?.displayName || this.userSubject.value?.email || '';
+        return this.userSubject.value?.displayName || this.userSubject.value?.email || this.auth.currentUser?.displayName || '';
     }
 
     isAdmin(): boolean {
@@ -69,5 +80,12 @@ export class AuthService implements OnDestroy {
 
     getUser(): User | null {
         return this.userSubject.value;
+    }
+
+    isLoggedIn(): boolean {
+        if (this.auth.currentUser) {
+            this.userSubject.next(this.auth.currentUser);
+        }
+        return this.userSubject.value !== null;
     }
 }

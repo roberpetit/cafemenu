@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { MenuComponent } from './pages/menu/menu.component';
-import { AdminToolsComponent, CartPreviewComponent } from '@cafemenu-monorepo/monolib';
+import { AdminToolsComponent, CartPreviewComponent, FlyerComponent } from '@cafemenu-monorepo/monolib';
 
 export const appRoutes: Route[] = [
     { path: '', component: MenuComponent },
@@ -10,5 +10,6 @@ export const appRoutes: Route[] = [
     { path: 'cafe/:pagina', component: MenuComponent },
     { path: 'cart', component: CartPreviewComponent },
     { path: 'admin', component: AdminToolsComponent },
+    { path: 'flyer', component: FlyerComponent },
     { path: '*', redirectTo: '', pathMatch: 'full' },
 ];

@@ -106,7 +106,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     scrollTo(id: string) {
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: "end", inline: "nearest" });
+          element.scrollIntoView({ behavior: 'smooth', block: "center", inline: "center" });
         } else {
           console.error(`Element with id ${id} not found`);
         }

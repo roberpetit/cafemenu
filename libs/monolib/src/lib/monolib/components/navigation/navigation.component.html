@@ -22,17 +22,19 @@
     }
     -->
     
-    <button mat-icon-button routerLink="cart" matTooltip="Carrito">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
 
-  @if (auth.user$ | async) {
     @if (auth.isAdmin$ | async) {
       <span [routerLink]="'admin'">{{ auth.getDisplayName() }}</span>
     }
     @else {
       <span>{{ auth.getDisplayName() }}</span>
     }
+    
+    <button mat-icon-button routerLink="cart" matTooltip="Carrito">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    
+  @if ((auth.user$ | async) || auth.isLoggedIn()) {
     
     <button mat-icon-button (click)="logout()" matTooltip="Logout">
       <mat-icon>logout</mat-icon>
