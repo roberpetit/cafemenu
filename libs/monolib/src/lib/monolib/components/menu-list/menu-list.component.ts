@@ -22,7 +22,7 @@ export interface MenuCategory {
   id?: string;
   title: string;
   items: MenuItem[];
-  opcionales?: MenuItem[];
+  opcionales?: string[];
 }
 
 @Component({
@@ -44,7 +44,7 @@ export class MenuListComponent {
   openEditItemDialog(index: number) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
       width: '400px',
-      data: { ...this.category.items[index] }
+      data: { ...this.category.items[index] , isAddMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -115,11 +115,12 @@ export class MenuListComponent {
   openEditCategoryNameDialog() {
     const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
       width: '400px',
-      data: { title: this.category.title, isAddMode: false }
+      data: { category: this.category, isAddMode: false }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: MenuCategory) => {
       if (result) {
         this.category.title = result.title;
+        this.category.opcionales = result.opcionales;
         this.edit.emit(this.category);
       }
     });

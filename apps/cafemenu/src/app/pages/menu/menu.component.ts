@@ -58,14 +58,15 @@ export class MenuComponent implements OnInit, OnDestroy {
     
     openAddCategoryDialog(): void {
         const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
-            width: '400px',
-            data: { title: '', isAddMode: true }
+            width: '500px',
+            data: { category: {title: '', opcionales: []}, isAddMode: true }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result: MenuCategory) => {
             if (result) {
                 //this.menu.push({ title: result, items: [], opcionales: [] });
-                this.categoryService.addCategory({ title: result, items: [], opcionales: [] }).then((response) => {
+                this.categoryService.addCategory({ title: result.title, items: result.items, opcionales: result.opcionales })
+                    .then((response) => {
                     console.log('Category added successfully!', response);
                 }
                 , (error) => {

@@ -24,7 +24,10 @@
     
 
     @if (auth.isAdmin$ | async) {
-      <span [routerLink]="'admin'">{{ auth.getDisplayName() }}</span>
+      <a mat-button routerLink="admin" matTooltip="Admin">
+
+        <span>{{ auth.getDisplayName() }}</span>
+      </a>
     }
     @else {
       <span>{{ auth.getDisplayName() }}</span>
