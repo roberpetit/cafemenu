@@ -38,7 +38,7 @@ export class MenuCategoryEditDialogComponent {
   }
 
   save() {
-    this.dialogRef.close(this.data.category);
+    this.dialogRef.close(this.category);
   }
 
   cancel() {
@@ -71,7 +71,7 @@ export class MenuCategoryEditDialogComponent {
   }
 
   updateOpcionales(keywords: string[]) {
-    this.data.category.opcionales = keywords;
+    this.category.opcionales = keywords;
   }
 
   add(event: MatChipInputEvent): void {

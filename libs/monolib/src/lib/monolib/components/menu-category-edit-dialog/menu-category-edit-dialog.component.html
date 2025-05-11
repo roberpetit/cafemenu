@@ -1,9 +1,9 @@
 <div class="container">
   @if (data.isAddMode) {
-    <h1 mat-dialog-title>Agregar Categoría</h1>
+  <h1 mat-dialog-title>Agregar Categoría</h1>
   }
   @else {
-    <h2 mat-dialog-title>Editar nombre de Categoría</h2>
+  <h2 mat-dialog-title>Editar Categoría</h2>
   }
   <mat-dialog-content>
     <mat-form-field appearance="fill" class="full-width">
@@ -12,33 +12,32 @@
     </mat-form-field>
   </mat-dialog-content>
 
-
-  <br/>
-  <br/>
-  <div class="row d-flex align-items-center justify-content-center">
+  <div class="row mb-2 mt-2">
     <div class="col-12 d-flex align-items-center justify-content-center small">
-      <mat-slide-toggle (ngModelChange)="changeEnableOpcionales($event)" [(ngModel)]="isChecked">Agregar una sección de informativa de opciones</mat-slide-toggle>
+      <mat-slide-toggle (ngModelChange)="changeEnableOpcionales($event)" [(ngModel)]="isChecked" class="small">
+        Agregar sección de opciones
+      </mat-slide-toggle>
     </div>
   </div>
-  <br/>
-  <mat-form-field class="example-form-field full-width">
-    <mat-label>Opcionales</mat-label>
-    <mat-chip-grid #chipGrid aria-label="Ingrese nombre y presione ENTER." [formControl]="formControl">
-      @for (keyword of keywords(); track keyword) {
+
+  <div *ngIf="isChecked" class="px-2">
+    <mat-form-field appearance="outline" class="full-width small-form-field">
+      <mat-label>Opcionales</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Ingrese nombre y presione ENTER." [formControl]="formControl">
+        @for (keyword of keywords(); track keyword) {
         <mat-chip-row (removed)="removeKeyword(keyword)">
           {{keyword}}
           <button matChipRemove [attr.aria-label]="'Eliminar ' + keyword">
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip-row>
-      }
-    </mat-chip-grid>
-    <input
-      placeholder="Ingrese nombre  y presione ENTER..."
-      [matChipInputFor]="chipGrid"
-      (matChipInputTokenEnd)="add($event)"
-    />
-  </mat-form-field>
+        }
+      </mat-chip-grid>
+      <input placeholder="Ingrese y nombre presione ENTER..." [matChipInputFor]="chipGrid"
+        (matChipInputTokenEnd)="add($event)" />
+    </mat-form-field>
+  </div>
+
 
 
 

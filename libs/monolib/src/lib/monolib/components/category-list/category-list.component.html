@@ -1,0 +1,48 @@
+
+
+<div cdkDropList [cdkDropListDisabled]="!canEdit" #todoList="cdkDropList" [cdkDropListData]="category.items"
+class="example-list" (cdkDropListDropped)="dropDrag.emit($event)">
+@for (item of category.items; track item; let idx = $index) {
+<div class="example-box row align-items-center" cdkDrag>
+
+  <div class="col-lg-8 col-md-8 col-sm-10">
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.description }}</p>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
+    <strong class="icons_container">${{ item.price?.toFixed(2) }}</strong>
+
+    @if (canEdit) {
+    <button mat-icon-button color="primary" (click)="openEditItemDialog.emit(idx)" matTooltip="Editar Item">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="openDeleteItemDialog.emit(idx)" matTooltip="Borrar Item">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="openAddItemToCartDialog.emit(idx)"
+      matTooltip="Agregar al carrito">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button cdkDragHandle mat-icon-button color="primary" matTooltip="Mover" style="cursor: grab;">
+      <mat-icon>drag_indicator</mat-icon>
+    </button>
+    }
+    @else {
+    <button mat-icon-button color="primary" (click)="openAddItemToCartDialog.emit(idx)"
+      matTooltip="Agregar al carrito">
+      <mat-icon>add</mat-icon>
+    </button>
+    }
+  </div>
+</div>
+}
+@if ((category.opcionales ?? []).length > 0) {
+<div *ngIf="category.opcionales?.length"
+  class="mt-2 d-flex flex-wrap gap-1 small text-muted align-items-center justify-content-center">
+  <h3>Opcionales:</h3>
+  @for (opcional of category.opcionales; track opcional) {
+  <span style="margin: 10px;" class="badge bg-secondary text-light">• {{ opcional }}</span>
+  }
+</div>
+}
+</div>

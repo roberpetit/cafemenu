@@ -65,7 +65,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result: MenuCategory) => {
             if (result) {
                 //this.menu.push({ title: result, items: [], opcionales: [] });
-                this.categoryService.addCategory({ title: result.title, items: result.items, opcionales: result.opcionales })
+                this.categoryService.addCategory({ title: result.title, items: result.items || [], opcionales: result.opcionales || []})
                     .then((response) => {
                     console.log('Category added successfully!', response);
                 }
@@ -78,7 +78,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     deleteCategory(index: number): void {
         this.categoryService.deleteCategory(this.menu[index].id || '').then((response) => {
-            //this.menu.splice(index, 1);
             console.log('Category deleted successfully!', response);
         }
         , (error) => {
@@ -87,10 +86,8 @@ export class MenuComponent implements OnInit, OnDestroy {
         );
     }
 
-    editCategory(index: number, category: MenuCategory): void {
+    editCategory(category: MenuCategory): void {
         console.log('Editing category:', category);
-        //this.menu[index] = category;
-        
         this.categoryService.editCategory(category.id || '', category).then((response) => {
             console.log('Category updated successfully!', response);
         }, (error) => {

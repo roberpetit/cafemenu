@@ -10,6 +10,10 @@ import { MenuItemConfirmationDialogComponent } from '../menu-item-confirmation-d
 import { MenuCategoryEditDialogComponent } from '../menu-category-edit-dialog/menu-category-edit-dialog.component';
 import { MenuItemAddToCartDialogComponent, MenuItemAddToCartDialogData } from '../menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
 import { CartService } from '../../services/cart.service';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { CategoryListComponent } from '../category-list/category-list.component';
+
 
 export interface MenuItem {
   id: string;
@@ -29,7 +33,7 @@ export interface MenuCategory {
   selector: 'lib-menu-list',
   templateUrl: './menu-list.component.html',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, DragDropModule, CommonModule, MatTooltipModule],
+  imports: [MatIconModule, CategoryListComponent, MatButtonModule, DragDropModule, CommonModule, MatTooltipModule, MatExpansionModule, MatChipsModule],
   styleUrls: ['./menu-list.component.scss']
 })
 export class MenuListComponent {

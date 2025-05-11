@@ -311,18 +311,9 @@
       }
     ],
     "opcionales": [
-      {
-        "title": "Leche de almendras de la casa",
-        "price": 200
-      },
-      {
-        "title": "Barra de chocolate",
-        "price": 200
-      },
-      {
-        "title": "Jarra de leche",
-        "price": 200
-      }
+      "Leche de almendras de la casa",
+      "Barra de chocolate",
+      "Jarra de leche"
     ]
   },
   {
@@ -419,21 +410,11 @@
       }
     ],
     "opcionales": [
-      {
-        "title": "Banana"
-      },
-      {
-        "title": "Frutilla"
-      },
-      {
-        "title": "Frutos rojos"
-      },
-      {
-        "title": "Durazno"
-      },
-      {
-        "title": "Mixto"
-      }
+      "Banana",
+      "Frutilla",
+      "Frutos rojos",
+      "Durazno",
+      "Mixto"
     ]
   },
   {

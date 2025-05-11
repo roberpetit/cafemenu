@@ -1,10 +1,4 @@
-.example-container {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 25px 25px 0;
-    display: inline-block;
-    vertical-align: top;
-  }
+
   
   .example-list {
     border: solid 1px #ccc;
@@ -56,20 +50,4 @@
   .icons_container {
     margin-left: 20px;
     margin-right: 20px;
-  }
-
-
-  mat-expansion-panel {
-    background: transparent;
-    border: 1px solid #e0e0e0;
-    border-radius: 0px;
-    font-size: 0.85rem;
-  }
-
-  .pad {
-    padding-left: 20px;
-  }
-
-  .spacer {
-    flex: 1 1 auto;
   }
