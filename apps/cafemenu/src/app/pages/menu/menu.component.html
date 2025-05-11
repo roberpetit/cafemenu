@@ -10,16 +10,23 @@
                 </button>
             </div>
         }
+        <div class="row mb-2 mt-2">
+            <div class="col-12 d-flex align-items-center justify-content-center small">
+              <mat-slide-toggle [(ngModel)]="withCollapse" class="small">
+                Collapse
+              </mat-slide-toggle>
+            </div>
+          </div>
     </div>
     <br />
     <div class="row menu-categories justify-content-center">
         <div class="col-lg-10 col-md-10 col-sm-12">
-            <ng-container *ngIf="menu.length > 0; else noCategories">
+            <ng-container *ngIf="menuCategories.length > 0; else noCategories">
 
                 
-                <ng-container *ngFor="let category of menu; let i = index">
+                <ng-container *ngFor="let category of menuCategories; let i = index">
                     
-                    <lib-menu-list [id]="category.id" [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
+                    <lib-menu-list [withCollapse]="withCollapse" [id]="category.id" [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
                     (edit)="editCategory($event)"></lib-menu-list>
                 </ng-container>
             </ng-container>

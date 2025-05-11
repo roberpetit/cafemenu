@@ -13,6 +13,8 @@ import { CartService } from '../../services/cart.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { CategoryListComponent } from '../category-list/category-list.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 
 export interface MenuItem {
@@ -33,7 +35,7 @@ export interface MenuCategory {
   selector: 'lib-menu-list',
   templateUrl: './menu-list.component.html',
   standalone: true,
-  imports: [MatIconModule, CategoryListComponent, MatButtonModule, DragDropModule, CommonModule, MatTooltipModule, MatExpansionModule, MatChipsModule],
+  imports: [MatIconModule, CategoryListComponent, MatButtonModule, DragDropModule, CommonModule, MatTooltipModule, MatExpansionModule, MatChipsModule, MatSlideToggleModule, FormsModule],
   styleUrls: ['./menu-list.component.scss']
 })
 export class MenuListComponent {
@@ -42,6 +44,8 @@ export class MenuListComponent {
   
   @Output() delete = new EventEmitter<boolean>();
   @Output() edit = new EventEmitter<MenuCategory>();
+
+  @Input() withCollapse = false;
 
   constructor(private dialog: MatDialog, private cartService: CartService) {}
 

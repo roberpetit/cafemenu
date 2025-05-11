@@ -6,6 +6,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ActivatedRoute } from "@angular/router";
 import { AuthService, CategoryService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
@@ -13,7 +14,7 @@ import { MenuCategory } from "@cafemenu-monorepo/monolib";
 
 @Component({
     selector: 'app-menu',
-    imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent],
+    imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent, MatSlideToggleModule ],
     providers: [],
     standalone: true,
     templateUrl: './menu.component.html',
@@ -21,11 +22,12 @@ import { MenuCategory } from "@cafemenu-monorepo/monolib";
   })
 export class MenuComponent implements OnInit, OnDestroy {
     
-    menu: MenuCategory[] = [];
+    menuCategories: MenuCategory[] = [];
     canEdit = false; 
     subscription: any;
     navigateTo = '';
-
+    withCollapse = false; 
+    
     constructor(private dialog: MatDialog, private categoryService: CategoryService, private authService: AuthService,
         private activatedRoute: ActivatedRoute
     ) { 
@@ -52,7 +54,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         //});
 
         this.categoryService.categories$.subscribe((categories) => {
-            this.menu = categories;
+            this.menuCategories = categories;
         });
     }
     
@@ -77,7 +79,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
 
     deleteCategory(index: number): void {
-        this.categoryService.deleteCategory(this.menu[index].id || '').then((response) => {
+        this.categoryService.deleteCategory(this.menuCategories[index].id || '').then((response) => {
             console.log('Category deleted successfully!', response);
         }
         , (error) => {
