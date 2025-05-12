@@ -23,13 +23,9 @@
         <div class="col-lg-10 col-md-10 col-sm-12">
             <ng-container *ngIf="menuCategories.length > 0; else noCategories">
 
-                
-                <ng-container *ngFor="let category of menuCategories; let i = index">
-                    
-                    <lib-menu-list [withCollapse]="withCollapse" [id]="category.id" [category]="category" [canEdit]="canEdit" (delete)="deleteCategory(i)"
+                <lib-menu-list [withCollapse]="withCollapse" [menuCategories]="menuCategories" [canEdit]="canEdit" (delete)="deleteCategory($event)"
                     (edit)="editCategory($event)"></lib-menu-list>
                 </ng-container>
-            </ng-container>
         </div>
         <ng-template #noCategories>
             <p>...</p>

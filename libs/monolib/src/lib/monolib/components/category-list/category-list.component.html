@@ -1,6 +1,6 @@
 
 
-<div cdkDropList [cdkDropListDisabled]="!canEdit" #todoList="cdkDropList" [cdkDropListData]="category.items"
+<div cdkDropList [cdkDropListDisabled]="!canEdit" [cdkDropListData]="category.items"
 class="example-list" (cdkDropListDropped)="dropDrag.emit($event)">
 @for (item of category.items; track item; let idx = $index) {
 <div class="example-box row align-items-center" cdkDrag>

@@ -29,6 +29,8 @@ export interface MenuCategory {
   title: string;
   items: MenuItem[];
   opcionales?: string[];
+
+  expanded?: boolean;
 }
 
 @Component({
@@ -39,31 +41,31 @@ export interface MenuCategory {
   styleUrls: ['./menu-list.component.scss']
 })
 export class MenuListComponent {
-  @Input() category: MenuCategory = { title: '', items: [] };
+  @Input() menuCategories: MenuCategory[] = [];
   @Input() canEdit!: boolean;
   
-  @Output() delete = new EventEmitter<boolean>();
+  @Output() delete = new EventEmitter<number>();
   @Output() edit = new EventEmitter<MenuCategory>();
 
   @Input() withCollapse = false;
 
   constructor(private dialog: MatDialog, private cartService: CartService) {}
 
-  openEditItemDialog(index: number) {
+  openEditItemDialog(index: number, menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
       width: '400px',
-      data: { ...this.category.items[index] , isAddMode: false }
+      data: { ...menuCategory.items[index] , isAddMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.category.items[index] = result;
-        this.edit.emit(this.category);
+        menuCategory.items[index] = result;
+        this.edit.emit(menuCategory);
       }
     });
   }
 
-  drop(event: CdkDragDrop<MenuItem[]>) {
+  dropCategory(event: CdkDragDrop<MenuCategory[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -74,10 +76,25 @@ export class MenuListComponent {
         event.currentIndex,
       );
     }
-    this.edit.emit(this.category);    
+    console.log(event);
+    // emit category order change   
   }
 
-  openAddNewItemDialog() {
+  drop(event: CdkDragDrop<MenuItem[]>, menuCategory: MenuCategory) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.edit.emit(menuCategory);    
+  }
+
+  openAddNewItemDialog(menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
       width: '400px',
       data: { title: '', description: '', price: 0, id: crypto.randomUUID(), isAddMode: true }
@@ -85,67 +102,67 @@ export class MenuListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.category.items.push(result);
-        this.edit.emit(this.category);
+        menuCategory.items.push(result);
+        this.edit.emit(menuCategory);
       }
     });
   }
   
-  openDeleteCategoryDialog() {
+  openDeleteCategoryDialog(menuCategory: MenuCategory, index: number) {
     const dialogRef = this.dialog.open(MenuItemConfirmationDialogComponent, {
       data: {
-        name: this.category.title,
+        name: menuCategory.title,
         type: 'categoría'
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.confirmDeleteCategory();
+        this.confirmDeleteCategory(index);
       }
     });
   }
 
-  openDeleteItemDialog(index: number) {
+  openDeleteItemDialog(index: number, menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuItemConfirmationDialogComponent, {
       data: {
-        name: this.category.items[index].title,
+        name: menuCategory.items[index].title,
         type: 'item'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.confirmDeleteItem(index);
+        this.confirmDeleteItem(index, menuCategory);
       }
     });
   }
 
-  openEditCategoryNameDialog() {
+  openEditCategoryNameDialog(menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
       width: '400px',
-      data: { category: this.category, isAddMode: false }
+      data: { category: menuCategory, isAddMode: false }
     });
     dialogRef.afterClosed().subscribe((result: MenuCategory) => {
       if (result) {
-        this.category.title = result.title;
-        this.category.opcionales = result.opcionales;
-        this.edit.emit(this.category);
+        menuCategory.title = result.title;
+        menuCategory.opcionales = result.opcionales;
+        this.edit.emit(menuCategory);
       }
     });
   }
 
-  confirmDeleteItem(index: number) {
-    this.category.items.splice(index, 1);
-    this.edit.emit(this.category);
+  confirmDeleteItem(index: number, menuCategory: MenuCategory) {
+    menuCategory.items.splice(index, 1);
+    this.edit.emit(menuCategory);
   }
 
-  confirmDeleteCategory() {
-    this.delete.emit(true);
+  confirmDeleteCategory(index: number) {
+    this.delete.emit(index);
   }
 
-  openAddItemToCartDialog(index: number) {
+  openAddItemToCartDialog(index: number, menuCategory: MenuCategory) {
     const menuItemAddToCartDialogData: MenuItemAddToCartDialogData = {
-      item: this.category.items[index],
+      item: menuCategory.items[index],
       isAddMode: false,
       quantity: 1
     };
@@ -163,5 +180,13 @@ export class MenuListComponent {
       }
     });
   }
-  
+
+  expandCategory(category: MenuCategory) {
+    this.menuCategories.forEach(cat => {
+      if (cat !== category) {
+        cat.expanded = false;
+      }
+    });
+    category.expanded = !category.expanded;
+  }
 }

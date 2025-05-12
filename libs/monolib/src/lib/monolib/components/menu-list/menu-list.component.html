@@ -1,44 +1,48 @@
-
-
 @if (withCollapse) {
+<div cdkDropList [cdkDropListDisabled]="!canEdit" [cdkDropListData]="menuCategories" class="example-list"
+  (cdkDropListDropped)="dropCategory($event)">
+  @for (category of menuCategories; track category; let idx = $index) {
 
-<div class="item-collapsable">
-  <mat-expansion-panel class="mt-2" hideToggle>
-    <mat-expansion-panel-header class="px-2 py-1">
-
-      <div class="spacer d-flex justify-content-between">
-        <div class=" pad">
-          <h2>{{category.title}}</h2>
+  <div class="item-collapsable" cdkDrag>
+    <mat-expansion-panel class="mt-2" hideToggle [expanded]="category.expanded" (opened)="expandCategory(category)">
+      <mat-expansion-panel-header class="px-2 py-1">
+        <div class="spacer d-flex justify-content-between">
+          <div class="pad">
+            <h2>{{category.title}}</h2>
+          </div>
+          @if (canEdit) {
+          <div class="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
+            <button mat-icon-button color="primary" (click)="openAddNewItemDialog(category)" matTooltip="Agregar Item">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openDeleteCategoryDialog(category, idx)"
+              matTooltip="Eliminar Categoria">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog(category)"
+              matTooltip="Editar nombre de Categoria">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button cdkDragHandle mat-icon-button color="primary" matTooltip="Mover" style="cursor: grab;">
+              <mat-icon>drag_indicator</mat-icon>
+            </button>
+          </div>
+          }
         </div>
-        @if (canEdit) {
-        <div class="d-flex align-items-center justify-content-end">
-          <button mat-icon-button color="primary" (click)="openAddNewItemDialog()" matTooltip="Agregar Item">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" (click)="openDeleteCategoryDialog()" matTooltip="Eliminar Categoria">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog()"
-            matTooltip="Editar Categoria">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-        }
-      </div>
 
-    </mat-expansion-panel-header>
+      </mat-expansion-panel-header>
 
-    <lib-category-list [category]="category" [canEdit]="canEdit" (openEditItemDialog)="openEditItemDialog($event)"
-      (openDeleteItemDialog)="openDeleteItemDialog($event)"
-      (openAddItemToCartDialog)="openAddItemToCartDialog($event)"
-      (dropDrag)="drop($event)" />
-
-  </mat-expansion-panel>
-
+      <lib-category-list [category]="category" [canEdit]="canEdit"
+        (openEditItemDialog)="openEditItemDialog($event, category)"
+        (openDeleteItemDialog)="openDeleteItemDialog($event, category)"
+        (openAddItemToCartDialog)="openAddItemToCartDialog($event, category)" (dropDrag)="drop($event, category)" />
+    </mat-expansion-panel>
+  </div>
+  }
 </div>
-
 }
 @else {
+<ng-container *ngFor="let category of menuCategories; let i = index">
 
   <div class="example-container">
     <div class="row d-flex justify-content-between">
@@ -46,27 +50,26 @@
         <h2>{{category.title}}</h2>
       </div>
       @if (canEdit) {
+
       <div class="col-lg-4 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
-        <button mat-icon-button color="primary" (click)="openAddNewItemDialog()" matTooltip="Agregar Item">
+        <button mat-icon-button color="primary" (click)="openAddNewItemDialog(category)" matTooltip="Agregar Item">
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="openDeleteCategoryDialog()" matTooltip="Eliminar Categoria">
+        <button mat-icon-button color="primary" (click)="openDeleteCategoryDialog(category, i)"
+          matTooltip="Eliminar Categoria">
           <mat-icon>delete</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog()"
+        <button mat-icon-button color="primary" (click)="openEditCategoryNameDialog(category)"
           matTooltip="Editar nombre de Categoria">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
       }
     </div>
-  
-    
-    <lib-category-list [category]="category" [canEdit]="canEdit" (openEditItemDialog)="openEditItemDialog($event)"
-      (openDeleteItemDialog)="openDeleteItemDialog($event)"
-      (openAddItemToCartDialog)="openAddItemToCartDialog($event)"
-      (dropDrag)="drop($event)" />
-
+    <lib-category-list [category]="category" [canEdit]="canEdit"
+      (openEditItemDialog)="openEditItemDialog($event, category)"
+      (openDeleteItemDialog)="openDeleteItemDialog($event, category)"
+      (openAddItemToCartDialog)="openAddItemToCartDialog($event, category)" (dropDrag)="drop($event, category)" />
   </div>
-
+</ng-container>
 }
