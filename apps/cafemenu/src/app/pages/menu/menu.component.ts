@@ -62,34 +62,18 @@ export class MenuComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((result: MenuCategory) => {
             if (result) {
-                this.categoryService.addCategory({ title: result.title, items: result.items || [], opcionales: result.opcionales || []})
-                    .then((response) => {
-                    console.log('Category added successfully!', response);
-                }
-                , (error) => {
-                    console.error('Error adding category:', error);
-                });
+                this.categoryService.addCategory({ title: result.title, items: result.items || [], opcionales: result.opcionales || []});
             }
         });
     }
 
     deleteCategory(index: number): void {
-        this.categoryService.deleteCategory(this.menuCategories[index].id || '').then((response) => {
-            console.log('Category deleted successfully!', response);
-        }
-        , (error) => {
-            console.error('Error deleting category:', error);
-        }
-        );
+        this.categoryService.deleteCategory(this.menuCategories[index].id || '');
     }
 
     editCategory(category: MenuCategory): void {
         console.log('Editing category:', category);
-        this.categoryService.editCategory(category.id || '', category).then((response) => {
-            console.log('Category updated successfully!', response);
-        }, (error) => {
-            console.error('Error adding category:', error);
-        });
+        this.categoryService.editCategory(category.id || '', category);
     }
 
     ngOnDestroy(): void {

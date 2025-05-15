@@ -68,6 +68,8 @@ export class MenuListComponent {
 
   dropCategory(event: CdkDragDrop<MenuCategory[]>) {
     if (event.previousContainer === event.container) {
+      this.menuCategories[event.previousIndex].order = event.currentIndex;
+      this.menuCategories[event.currentIndex].order = event.previousIndex;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(
@@ -77,8 +79,8 @@ export class MenuListComponent {
         event.currentIndex,
       );
     }
-    console.log(event);
-    // emit category order change   
+    this.edit.emit(this.menuCategories[event.currentIndex]);
+    this.edit.emit(this.menuCategories[event.previousIndex]);
   }
 
   drop(event: CdkDragDrop<MenuItem[]>, menuCategory: MenuCategory) {

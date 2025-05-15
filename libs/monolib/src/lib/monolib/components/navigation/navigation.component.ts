@@ -43,7 +43,7 @@ export class NavigationComponent {
   theme: WritableSignal<string>;
   showCollapse: WritableSignal<boolean>;
   form = new FormGroup({
-    collapse: new FormControl(true),
+    collapse: new FormControl(false),
   });
   constructor(
     private readonly themeService: ThemeService,
@@ -55,6 +55,7 @@ export class NavigationComponent {
     this.form.get('collapse')?.valueChanges.subscribe((value) => {
       this.categoryService.collapsableView.set(value ?? false);
     });
+    this.form.get('collapse')?.setValue(true);
   }
 
   instaClick(): void {

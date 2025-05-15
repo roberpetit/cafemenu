@@ -11,3 +11,4 @@ export * from './lib/monolib/components/admin-tools/admin-tools.component';
 export * from './lib/monolib/components/menu-item-add-to-cart-dialog/menu-item-add-to-cart-dialog.component';
 export * from './lib/monolib/components/cart-preview/cart-preview.component';
 export * from './lib/monolib/components/flyer/flyer.component';
+

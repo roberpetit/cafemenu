@@ -1,9 +1,15 @@
 // category.service.ts
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angular/fire/firestore';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
-import { doc, orderBy, query, updateDoc } from 'firebase/firestore';
+import { doc, orderBy, query, updateDoc, writeBatch } from 'firebase/firestore';
+
+export interface BatchWrite {
+  op: 'set' | 'update' | 'delete' | 'add';
+  path: string;
+  data?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +22,13 @@ export class CategoryService {
 
   private collectionRef;
 
+
+
+  private queue: BatchWrite[] = [];
+  private debounceDelay = 300; // milliseconds
+  private scheduled = false;
+
+  
   constructor(private firestore: Firestore) {
       this.collectionRef = collection(this.firestore, 'menu');
       this.loadCategories();
@@ -34,18 +47,70 @@ export class CategoryService {
     return this.categoriesSubject.getValue();
   }
 
-  addCategory(category: MenuCategory): Promise<any> {
-    const menuRef = collection(this.firestore, 'menu');
-    return addDoc(menuRef, category);
+  addCategory(category: MenuCategory): void {
+    this.add('menu', category);
   }
 
-  editCategory(categoryId: string, category: any): Promise<any> {
-    const docRef = doc(this.firestore, `menu/${categoryId}`);
-    return updateDoc(docRef, category);
+  editCategory(categoryId: string, category: any): void {
+    this.update(`menu/${categoryId}`, category);
   }
 
-  deleteCategory(categoryId: string) {
-    const docRef = doc(this.firestore, `menu/${categoryId}`);
-    return deleteDoc(docRef);
+  deleteCategory(categoryId: string): void {
+    this.delete(`menu/${categoryId}`);
+  }
+
+  
+  add(path: string, data: any): void {
+    this.queue.push({ op: 'add', path, data });
+  }
+
+  set(path: string, data: any) {
+    this.queue.push({ op: 'set', path, data });
+    this.scheduleFlush();
+  }
+
+  update(path: string, data: any) {
+    this.queue.push({ op: 'update', path, data });
+    this.scheduleFlush();
+  }
+
+  delete(path: string) {
+    this.queue.push({ op: 'delete', path });
+    this.scheduleFlush();
+  }
+
+  private scheduleFlush() {
+    if (!this.scheduled) {
+      this.scheduled = true;
+      timer(this.debounceDelay).subscribe(() => this.flush());
+    }
+  }
+
+  private async flush() {
+    if (this.queue.length === 0) {
+      this.scheduled = false;
+      return;
+    }
+
+    const batch = writeBatch(this.firestore);
+    for (const write of this.queue) {
+      const ref = doc(this.firestore, write.path);
+      switch (write.op) {
+        case 'add':
+        case 'set':
+          batch.set(ref, write.data);
+          break;
+        case 'update':
+          batch.update(ref, write.data);
+          break;
+        case 'delete':
+          batch.delete(ref);
+          break;
+      }
+    }
+
+    await batch.commit();
+    this.queue = [];
+    this.scheduled = false;
   }
 }
