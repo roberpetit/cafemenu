@@ -1,4 +1,4 @@
-@if (withCollapse) {
+@if (collapsableView) {
 <div cdkDropList [cdkDropListDisabled]="!canEdit" [cdkDropListData]="menuCategories" class="example-list"
   (cdkDropListDropped)="dropCategory($event)">
   @for (category of menuCategories; track category; let idx = $index) {

@@ -31,6 +31,7 @@ export interface MenuCategory {
   opcionales?: string[];
 
   expanded?: boolean;
+  order?: number;
 }
 
 @Component({
@@ -47,13 +48,13 @@ export class MenuListComponent {
   @Output() delete = new EventEmitter<number>();
   @Output() edit = new EventEmitter<MenuCategory>();
 
-  @Input() withCollapse = false;
+  @Input() collapsableView = false;
 
   constructor(private dialog: MatDialog, private cartService: CartService) {}
 
   openEditItemDialog(index: number, menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
-      width: '400px',
+      width: '800px',
       data: { ...menuCategory.items[index] , isAddMode: false }
     });
 

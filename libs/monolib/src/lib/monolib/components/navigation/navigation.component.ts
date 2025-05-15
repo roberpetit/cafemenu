@@ -11,8 +11,10 @@ import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../services/auth.service';
-import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CategoryService } from '../../services/category.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'lib-navigation',
@@ -30,28 +32,42 @@ import { CategoryService } from '../../services/category.service';
     RouterLink,
     CommonModule,
     MatTooltipModule,
-],
-  providers: [ThemeService ]
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  providers: [ThemeService],
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
   theme: WritableSignal<string>;
-  
-  constructor(private readonly themeService: ThemeService, public auth: AuthService, public categoryService: CategoryService,
+  showCollapse: WritableSignal<boolean>;
+  form = new FormGroup({
+    collapse: new FormControl(true),
+  });
+  constructor(
+    private readonly themeService: ThemeService,
+    public auth: AuthService,
+    public categoryService: CategoryService
   ) {
     this.theme = this.themeService.theme;
+    this.showCollapse = this.categoryService.collapsableView;
+    this.form.get('collapse')?.valueChanges.subscribe((value) => {
+      this.categoryService.collapsableView.set(value ?? false);
+    });
   }
 
   instaClick(): void {
-    window.open('https://www.instagram.com/santoscafe___/?hl=es', "_blank");
+    window.open('https://www.instagram.com/santoscafe___/?hl=es', '_blank');
   }
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
-  
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
+
   onThemeChange(): void {
     if (this.themeService.theme() === 'color-scheme-dark') {
       this.themeService.theme.set('color-scheme-light');
@@ -61,11 +77,10 @@ export class NavigationComponent {
   }
 
   login(): void {
-    this.auth.loginWithGoogle()
-  }
-  
-  logout(): void {
-    this.auth.logout()
+    this.auth.loginWithGoogle();
   }
 
+  logout(): void {
+    this.auth.logout();
+  }
 }

@@ -1,9 +1,9 @@
 // category.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angular/fire/firestore';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, orderBy, query, updateDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ import { doc, updateDoc } from 'firebase/firestore';
 export class CategoryService {
   private categoriesSubject = new BehaviorSubject<MenuCategory[]>([]);
   categories$ = this.categoriesSubject.asObservable();
+
+  collapsableView = signal(false); 
 
   private collectionRef;
 
@@ -20,7 +22,9 @@ export class CategoryService {
   }
 
   private loadCategories() {
-    collectionData(this.collectionRef, { idField: 'id' }).subscribe((categories: any[]) => {
+    // Important. Subscription to the collection data. Should be the only one.
+    const orderedQuery = query(this.collectionRef, orderBy('order'));
+    collectionData(orderedQuery, { idField: 'id' }).subscribe((categories: any[]) => {
         this.categoriesSubject.next(categories);
         console.log('Categories loaded:', categories);
     });

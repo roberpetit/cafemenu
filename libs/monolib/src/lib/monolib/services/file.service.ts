@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { MenuCategory } from '../components/menu-list/menu-list.component';
+import { MenuCategory, MenuItem } from '../components/menu-list/menu-list.component';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { addDoc, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -59,7 +60,7 @@ export class FileService {
   }
 
   async deleteAllAndReUploadFromJsonFile() {
-    const data: any[] = await firstValueFrom(this.http.get<any[]>('menu-data.json'));
+    const data: MenuCategory[] = await firstValueFrom(this.http.get<any[]>('menu-data.json'));
     const menuCollection = collection(this.firestore, 'menu');
   
     // Eliminar todos los documentos existentes
@@ -69,15 +70,20 @@ export class FileService {
     console.log('Todos los documentos anteriores eliminados');
   
     // Agregar los nuevos
-    for (const category of data) {
-      category.items = category.items.map((item: any) => ({
+    for (let i = 0; i < data.length; i++) {
+      const category = data[i];
+      category.items = category.items.map((item: MenuItem) => ({
         ...item,
         id: crypto.randomUUID()
       }));
-  
+      category.expanded = false;
+      category.order = i;
+
       const docRef = doc(menuCollection, crypto.randomUUID());
       await setDoc(docRef, category);
+      console.log('index:', i, 'element:', data[i]);
     }
+
 
     console.log('Categorías actualizadas con IDs únicos por ítem');
     

@@ -1,12 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, WritableSignal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ActivatedRoute } from "@angular/router";
 import { AuthService, CategoryService, MenuCategoryEditDialogComponent, MenuListComponent } from "@cafemenu-monorepo/monolib";
@@ -14,7 +13,7 @@ import { MenuCategory } from "@cafemenu-monorepo/monolib";
 
 @Component({
     selector: 'app-menu',
-    imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent, MatSlideToggleModule ],
+    imports: [CommonModule, MatTooltipModule, MatButtonModule, MatListModule, MatIconModule, FormsModule, MatCardModule, MenuListComponent ],
     providers: [],
     standalone: true,
     templateUrl: './menu.component.html',
@@ -26,11 +25,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     canEdit = false; 
     subscription: any;
     navigateTo = '';
-    withCollapse = false; 
+    collapsableView: WritableSignal<boolean>; 
     
     constructor(private dialog: MatDialog, private categoryService: CategoryService, private authService: AuthService,
         private activatedRoute: ActivatedRoute
-    ) { 
+    ) {
+        this.collapsableView = this.categoryService.collapsableView;
     }
 
     ngOnInit(): void {
@@ -48,10 +48,6 @@ export class MenuComponent implements OnInit, OnDestroy {
                 this.canEdit = false;
             }
         });
-        //this.fileService.getFile('menu-data.json').subscribe((data: MenuCategory[]) => {
-            //this.menu = data;
-          //  console.log(this.menu);
-        //});
 
         this.categoryService.categories$.subscribe((categories) => {
             this.menuCategories = categories;
@@ -66,7 +62,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((result: MenuCategory) => {
             if (result) {
-                //this.menu.push({ title: result, items: [], opcionales: [] });
                 this.categoryService.addCategory({ title: result.title, items: result.items || [], opcionales: result.opcionales || []})
                     .then((response) => {
                     console.log('Category added successfully!', response);

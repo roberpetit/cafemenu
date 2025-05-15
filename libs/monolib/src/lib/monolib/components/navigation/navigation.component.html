@@ -75,6 +75,16 @@
       </mat-toolbar>
     </div>
     <div>
+      
+      <div class="row mb-2 mt-2">
+        <div class="col-12 d-flex align-items-center justify-content-center small">
+          <form [formGroup]="form" class="d-flex justify-content-center">
+            <mat-slide-toggle formControlName="collapse" class="small">
+                Colapsar Categorias
+            </mat-slide-toggle>
+          </form>
+        </div>
+    </div>
       <mat-nav-list>
         @for (item of categoryService.categories$ | async; track $index) {
           <a mat-list-item [routerLink]="['cafe/' + item.id]">{{item.title}}</a>
