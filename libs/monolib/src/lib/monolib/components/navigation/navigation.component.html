@@ -55,12 +55,12 @@
     </button>
   -->
   @if (theme() !== 'color-scheme-light') {
-  <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()">
+  <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
     <img src="/instagram_white.svg" alt="instagram" class="logo"/>
   </button>
   }
   @else {
-  <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" >
+  <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
     <img src="/instagram.svg" alt="instagram" class="logo"/>
   </button>
   }

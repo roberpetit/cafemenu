@@ -29,6 +29,8 @@ export class CategoryService {
   
   private autoFlush$ = new Subject<void>();
 
+  private categoryUpdateMap = new Map<string, MenuCategory>();
+
   constructor(private firestore: Firestore) {
       this.collectionRef = collection(this.firestore, 'menu');
       this.loadCategories();
@@ -72,8 +74,11 @@ export class CategoryService {
   }
 
   update(path: string, data: any) {
-    this.queue.next([...this.queue.getValue(), { op: 'update', path, data }]);
+    const queue = this.queue.getValue();
+    const filteredQueue = queue.filter(q => !(q.op === 'update' && q.path === path));
+    this.queue.next([...filteredQueue, { op: 'update', path, data }]);
   }
+  
 
   delete(path: string) {
     this.queue.next([...this.queue.getValue(), { op: 'delete', path }]);
