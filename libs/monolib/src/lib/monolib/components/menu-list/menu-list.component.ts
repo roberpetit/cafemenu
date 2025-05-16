@@ -61,6 +61,7 @@ export class MenuListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         menuCategory.items[index] = result;
+        console.log('Menu item edited:', result);
         this.edit.emit(menuCategory);
       }
     });
@@ -99,7 +100,7 @@ export class MenuListComponent {
 
   openAddNewItemDialog(menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuItemEditDialogComponent, {
-      width: '400px',
+      width: '800px',
       data: { title: '', description: '', price: 0, id: crypto.randomUUID(), isAddMode: true }
     });
 
@@ -142,7 +143,7 @@ export class MenuListComponent {
 
   openEditCategoryNameDialog(menuCategory: MenuCategory) {
     const dialogRef = this.dialog.open(MenuCategoryEditDialogComponent, {
-      width: '400px',
+      width: '800px',
       data: { category: menuCategory, isAddMode: false }
     });
     dialogRef.afterClosed().subscribe((result: MenuCategory) => {
@@ -171,7 +172,7 @@ export class MenuListComponent {
     };
 
     const dialogRef = this.dialog.open(MenuItemAddToCartDialogComponent, {
-      width: '400px',
+      width: '800px',
       data: menuItemAddToCartDialogData
     });
 
@@ -179,7 +180,6 @@ export class MenuListComponent {
       if (result) {
         this.cartService.addItem(result.item, result.quantity || 1);
         // this.category.items[index] = result.item; // add badge of amount in cart
-
       }
     });
   }
@@ -190,6 +190,7 @@ export class MenuListComponent {
         cat.expanded = false;
       }
     });
-    category.expanded = !category.expanded;
+    category.expanded = true;
   }
+
 }

@@ -1,6 +1,6 @@
 // category.service.ts
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, timer } from 'rxjs';
+import { BehaviorSubject, debounceTime, Subject, timer } from 'rxjs';
 import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angular/fire/firestore';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
 import { doc, orderBy, query, updateDoc, writeBatch } from 'firebase/firestore';
@@ -22,20 +22,23 @@ export class CategoryService {
 
   private collectionRef;
 
+  private queue = new BehaviorSubject<BatchWrite[]>([]);
+  queue$ = this.queue.asObservable();
 
-
-  private queue: BatchWrite[] = [];
-  private debounceDelay = 300; // milliseconds
-  private scheduled = false;
-
+  private debounceDelay = 500; // milliseconds
   
+  private autoFlush$ = new Subject<void>();
+
   constructor(private firestore: Firestore) {
       this.collectionRef = collection(this.firestore, 'menu');
       this.loadCategories();
+      this.autoFlush$.pipe(debounceTime(this.debounceDelay)).subscribe(() => {
+        this.flush();
+      });
   }
 
   private loadCategories() {
-    // Important. Subscription to the collection data. Should be the only one.
+    // Important. Subscription to the collection data. Should be the only one. (it listens to firebase changes)
     const orderedQuery = query(this.collectionRef, orderBy('order'));
     collectionData(orderedQuery, { idField: 'id' }).subscribe((categories: any[]) => {
         this.categoriesSubject.next(categories);
@@ -61,39 +64,32 @@ export class CategoryService {
 
   
   add(path: string, data: any): void {
-    this.queue.push({ op: 'add', path, data });
+    this.queue.next([...this.queue.getValue(), { op: 'add', path, data }]);
   }
 
   set(path: string, data: any) {
-    this.queue.push({ op: 'set', path, data });
-    this.scheduleFlush();
+    this.queue.next([...this.queue.getValue(), { op: 'set', path, data }]);
   }
 
   update(path: string, data: any) {
-    this.queue.push({ op: 'update', path, data });
-    this.scheduleFlush();
+    this.queue.next([...this.queue.getValue(), { op: 'update', path, data }]);
   }
 
   delete(path: string) {
-    this.queue.push({ op: 'delete', path });
-    this.scheduleFlush();
+    this.queue.next([...this.queue.getValue(), { op: 'delete', path }]);
   }
 
-  private scheduleFlush() {
-    if (!this.scheduled) {
-      this.scheduled = true;
-      timer(this.debounceDelay).subscribe(() => this.flush());
-    }
+  public scheduleFlush() {
+    this.autoFlush$.next();
   }
 
   private async flush() {
-    if (this.queue.length === 0) {
-      this.scheduled = false;
+    if (this.queue.getValue().length === 0) {
       return;
     }
 
     const batch = writeBatch(this.firestore);
-    for (const write of this.queue) {
+    for (const write of this.queue.getValue()) {
       const ref = doc(this.firestore, write.path);
       switch (write.op) {
         case 'add':
@@ -110,7 +106,6 @@ export class CategoryService {
     }
 
     await batch.commit();
-    this.queue = [];
-    this.scheduled = false;
+    this.queue.next([]);
   }
 }
