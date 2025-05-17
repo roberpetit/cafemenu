@@ -17,6 +17,7 @@ import {
 } from '@cafemenu-monorepo/monolib';
 import { MenuCategory } from '@cafemenu-monorepo/monolib';
 import { Observable } from 'rxjs';
+import * as admin from 'firebase-admin';
 
 @Component({
   selector: 'app-menu',
@@ -61,8 +62,8 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.subscription = this.authService.user$.subscribe((user) => {
-      if (user) {
+    this.subscription = this.authService.isAdmin$.subscribe((admin) => {
+      if (admin) {
         this.canEdit = true;
       } else {
         this.canEdit = false;

@@ -55,7 +55,7 @@ export class NavigationComponent {
     this.form.get('collapse')?.valueChanges.subscribe((value) => {
       this.categoryService.collapsableView.set(value ?? false);
     });
-    this.form.get('collapse')?.setValue(true);
+    this.form.get('collapse')?.setValue(false);
   }
 
   instaClick(): void {

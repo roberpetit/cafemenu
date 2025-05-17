@@ -108,6 +108,7 @@ export class AuthService implements OnDestroy {
 
   isLoggedIn(): boolean {
     if (this.auth.currentUser) {
+      this.checkAdminStatus(this.auth.currentUser);
       this.userSubject.next(this.auth.currentUser);
     }
     return this.userSubject.value !== null;
