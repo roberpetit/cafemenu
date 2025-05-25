@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row mb-2 mt-2">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+            <h2 mat-dialog-title>{{ data.isNew ? 'Agregar' : 'Editar' }} Admin</h2>
+        </div>
+    </div>
+    @if (form) {
+    <mat-dialog-content [formGroup]="form">
+        <div class="row mb-2 mt-2">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="name" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    }
+
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="dialogRef.close()">Cancelar</button>
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Guardar</button>
+    </mat-dialog-actions>
+</div>

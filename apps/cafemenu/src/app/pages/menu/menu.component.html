@@ -3,6 +3,7 @@
         <div class="col-3 text-center ">
             <h1>Menu</h1>
         </div>
+        <!-- Agregar categoria -->
         @if (canEdit) {
         <div class="d-flex col-1 text-center align-items-center">
             <button mat-icon-button color="primary" (click)="openAddCategoryDialog()" matTooltip="Agregar Categoria">
@@ -11,18 +12,31 @@
         </div>
         }
     </div>
+
+    <!-- botones de guardar y deshacer cambios -->
     @if ((queue | async)?.length) {
         <div class="row justify-content-end">
             <div class="col-3 justify-content-center align-items-center ">
                 <div class="fab-save">
-                    <button mat-fab color="primary" class="" (click)="save()" matTooltip="Guardar">
+                    <button mat-fab color="primary" (click)="save()" matTooltip="Guardar">
                         <mat-icon style="transform: scale(2);">save</mat-icon>
                     </button>
-                    <h3>Guardar</h3>
+                    <h3 class="fab-label">Guardar</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-3 justify-content-center align-items-center ">
+                <div class="fab-undo" >
+                    <button mat-fab color="accent" (click)="undo()" matTooltip="Deshacer cambios">
+                        <mat-icon style="transform: scale(2);">undo</mat-icon>
+                    </button>
+                    <h3 class="fab-label">Deshacer</h3>
                 </div>
             </div>
         </div>
     }
+    
     <br />
     <div class="row menu-categories justify-content-center">
         <div class="col-lg-10 col-md-10 col-sm-12">

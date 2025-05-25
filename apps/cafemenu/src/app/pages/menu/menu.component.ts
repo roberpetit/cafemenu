@@ -17,7 +17,6 @@ import {
 } from '@cafemenu-monorepo/monolib';
 import { MenuCategory } from '@cafemenu-monorepo/monolib';
 import { Observable } from 'rxjs';
-import * as admin from 'firebase-admin';
 
 @Component({
   selector: 'app-menu',
@@ -83,12 +82,15 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: MenuCategory) => {
       if (result) {
-        this.menuCategories.push(result)
-        this.categoryService.addCategory({
+        const category = {
+          id: crypto.randomUUID(),
           title: result.title,
           items: result.items || [],
           opcionales: result.opcionales || [],
-        });
+        };
+
+        this.menuCategories.push(category)
+        this.categoryService.addCategory(category);
       }
     });
   }
@@ -122,5 +124,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   save(): void {
     this.categoryService.scheduleFlush()
+  }
+
+  undo(): void {
+    this.categoryService.undoChanges()
   }
 }

@@ -8,7 +8,7 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { setDoc } from 'firebase/firestore';
+import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +36,20 @@ export class AuthService implements OnDestroy {
   }
 
   private async checkAdminStatus(user: User) {
-    const adminDocRef = doc(this.firestore, 'config', 'admins');
+    if (!user.email) return;
+    const adminDocRef = doc(this.firestore, 'admins', user.email);
     const adminSnap = await getDoc(adminDocRef);
 
     if (adminSnap.exists()) {
-      const uids = adminSnap.data()['uids'];
-      this.isAdminSubject.next(Array.isArray(uids) && uids.includes(user.uid));
+      const data = adminSnap.data();
+      if (!data['uid']) {
+        alert('Primer login admin, Bienvenido!');
+        await updateDoc(adminDocRef, {
+          uid: user.uid,
+          updated: new Date(),
+        });
+      }
+      this.isAdminSubject.next(true);
     } else {
       this.isAdminSubject.next(false);
     }
@@ -53,7 +61,6 @@ export class AuthService implements OnDestroy {
       .then((result) => {
         const user = result.user;
         if (!user) return;
-        this.updateCart(user.uid);
         this.userSubject.next(user);
         this.updateUserDoc(user);
       })
@@ -70,18 +77,6 @@ export class AuthService implements OnDestroy {
       lastLogin: new Date(),
     };
     return setDoc(userRef, userData, { merge: true });
-  }
-
-  updateCart(uid: string) {
-    const cartRef = doc(this.firestore, 'carts', uid);
-    getDoc(cartRef).then((docSnap) => {
-      if (!docSnap.exists()) {
-        // Si el carrito no existe, puedes crear uno nuevo o manejarlo como desees
-        console.log('Carrito no existe, creando uno nuevo...');
-      } else {
-        console.log('Carrito ya existe:', docSnap.data());
-      }
-    });
   }
 
   logout() {

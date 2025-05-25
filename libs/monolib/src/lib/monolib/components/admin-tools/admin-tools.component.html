@@ -1,14 +1,86 @@
 <mat-card class="admin-tools-card">
-    <div class="d-flex justify-content-center">
-        <h2>Admin Tools</h2>
+  <h2 class="text-center mb-4">Herramientas de administrador</h2>
+
+  <div class="admin-buttons-grid">
+    <div class="admin-button" tabindex="0" (click)="reload()" (keyup.enter)="reload()"
+      matTooltip="Recarga las categorías desde el archivo original guardado en el repositorio.">
+      <button mat-icon-button color="primary">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <span>Recargar</span>
     </div>
-    <div class="d-flex justify-content-center">
-        @if (isAdmin) {
-        <button mat-raised-button color="primary" (click)="reload()">Re-upload categories</button>
-        <button mat-raised-button color="accent" (click)="downloadCategories()">Download categories</button>
-        }
-        <button mat-stroked-button disabled>Manage admins (soon)</button>
+
+    <div class="admin-button" tabindex="0" (click)="downloadCategories()" (keyup.enter)="downloadCategories()"
+      matTooltip="Descarga todas las categorías actuales como un archivo JSON de respaldo.">
+      <button mat-icon-button color="accent">
+        <mat-icon>download</mat-icon>
+      </button>
+      <span>Descargar</span>
     </div>
+
+    <div class="admin-button" tabindex="0" (click)="fileInput.click()" (keyup.enter)="fileInput.click()"
+      matTooltip="Selecciona un archivo JSON para cargar y reemplazar las categorías.">
+      <button mat-icon-button color="warn">
+        <mat-icon>upload</mat-icon>
+      </button>
+      <span>Subir JSON</span>
+    </div>
+
+    <div class="admin-button" matTooltip="Agregar y eliminar admins.">
+      <button mat-icon-button (click)="showAdminsPanel = !showAdminsPanel"
+        (keyup.enter)="showAdminsPanel = !showAdminsPanel">
+        <mat-icon>supervisor_account</mat-icon>
+      </button>
+      <span>Admins</span>
+    </div>
+  </div>
+
+  <input type="file" #fileInput accept=".json" style="display: none" (change)="onFileSelected($event)" />
 </mat-card>
 
-<lib-cart-preview/>
+
+@if (showAdminsPanel) {
+<mat-card class="admin-tools-card">
+
+  <table mat-table [dataSource]="(admins$ | async) || []" class="w-full" matSort>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let admin"> {{admin.name}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let admin"> {{admin.email}} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let admin">
+        <button mat-icon-button color="accent" (click)="editAdmin(admin)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteAdmin(admin.email)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'email', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'email', 'actions']"></tr>
+  </table>
+
+  <div class="d-flex justify-content-end align-items-center mt-2">
+    <button mat-raised-button color="primary" (click)="addAdmin()">
+      <mat-icon>person_add</mat-icon>
+      Agregar nuevo admin
+    </button>
+  </div>
+
+
+</mat-card>
+
+}

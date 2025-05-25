@@ -1,12 +1,13 @@
-<mat-toolbar class="color-scheme-dark" fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
+<mat-toolbar class="color-scheme-dark" fixedInViewport
+  [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
 
   @if (isHandset$ | async) {
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
   }
-  <span>Santos Cafe</span>
 
+  <span>Santos Cafe</span>
   <span class="menu-spacer"></span>
   <!-- 
   <span class="spacer"></span>
@@ -20,33 +21,30 @@
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
-    -->
-    
+  -->
 
-    @if (auth.isAdmin$ | async) {
-      <a mat-button routerLink="admin" matTooltip="Admin">
+  @if (auth.isAdmin$ | async) {
+  <a mat-button routerLink="admin" matTooltip="Admin">
+    <span>{{ auth.getDisplayName() }}</span>
+  </a>
+  }
+  @else if ((isHandset$ | async) === false){
+  <span>{{ auth.getDisplayName() }}</span>
+  }
 
-        <span>{{ auth.getDisplayName() }}</span>
-      </a>
-    }
-    @else {
-      <span>{{ auth.getDisplayName() }}</span>
-    }
-    
-    <button mat-icon-button routerLink="cart" matTooltip="Carrito">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
-    
+  <button mat-icon-button routerLink="cart" matTooltip="Carrito">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+
   @if ((auth.user$ | async) || auth.isLoggedIn()) {
-    
-    <button mat-icon-button (click)="logout()" matTooltip="Logout">
-      <mat-icon>logout</mat-icon>
-    </button>
+  <button mat-icon-button (click)="logout()" matTooltip="Logout">
+    <mat-icon>logout</mat-icon>
+  </button>
   }
   @else {
-    <button mat-icon-button (click)="login()" matTooltip="Login">
-      <mat-icon>login</mat-icon>
-    </button>
+  <button mat-icon-button (click)="login()" matTooltip="Login">
+    <mat-icon>login</mat-icon>
+  </button>
   }
 
   <!-- 
@@ -56,43 +54,44 @@
   -->
   @if (theme() !== 'color-scheme-light') {
   <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
-    <img src="/instagram_white.svg" alt="instagram" class="logo"/>
+    <img src="/instagram_white.svg" alt="instagram" class="logo" />
   </button>
   }
   @else {
   <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
-    <img src="/instagram.svg" alt="instagram" class="logo"/>
+    <img src="/instagram.svg" alt="instagram" class="logo" />
   </button>
   }
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container" cdkScrollable>
-  <mat-sidenav #drawer class="sidenav " [ngClass]="theme()" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav " [ngClass]="theme()" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
     <div>
       <mat-toolbar class="sidenav-header" color="primary">
-        <img src="/logo.svg" alt="Logo" class="logo" style="fill: black;"/>
+        <img src="/logo.svg" alt="Logo" class="logo" style="fill: black;" />
       </mat-toolbar>
     </div>
     <div>
-      
+
       <div class="row mb-2 mt-2">
         <div class="col-12 d-flex align-items-center justify-content-center small">
           <form [formGroup]="form" class="d-flex justify-content-center">
             <mat-slide-toggle formControlName="collapse" class="small">
-                Colapsar Categorias
+              Colapsar Categorias
             </mat-slide-toggle>
           </form>
         </div>
-    </div>
+      </div>
       <mat-nav-list>
         @for (item of categoryService.categories$ | async; track $index) {
-          <a mat-list-item [routerLink]="['cafe/' + item.id]">{{item.title}}</a>
+        <a mat-list-item [routerLink]="['cafe/' + item.id]">{{item.title}}</a>
         }
       </mat-nav-list>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="color-scheme-light inner-content">
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

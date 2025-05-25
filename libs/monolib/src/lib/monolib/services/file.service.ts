@@ -59,8 +59,11 @@ export class FileService {
     console.log('Sincronización de menú completa');
   }
 
-  async deleteAllAndReUploadFromJsonFile() {
-    const data: MenuCategory[] = await firstValueFrom(this.http.get<any[]>('menu-data.json'));
+  async deleteAllAndReUploadFromJsonFile(json?: MenuCategory[]) {
+    if (!json) {
+      json = await firstValueFrom(this.http.get<any[]>('menu-data.json'));
+    }
+    const data: MenuCategory[] = json;
     const menuCollection = collection(this.firestore, 'menu');
   
     // Eliminar todos los documentos existentes
@@ -74,16 +77,15 @@ export class FileService {
       const category = data[i];
       category.items = category.items.map((item: MenuItem) => ({
         ...item,
-        id: crypto.randomUUID()
+        id: item.id ?? crypto.randomUUID()
       }));
       category.expanded = false;
       category.order = i;
 
-      const docRef = doc(menuCollection, crypto.randomUUID());
+      const docRef = doc(menuCollection, category.id ?? crypto.randomUUID());
       await setDoc(docRef, category);
       console.log('index:', i, 'element:', data[i]);
     }
-
 
     console.log('Categorías actualizadas con IDs únicos por ítem');
     

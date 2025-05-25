@@ -76,11 +76,10 @@ export class MenuCategoryEditDialogComponent {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    if (value) {
+    if (value && !this.keywords().includes(value)) {
       this.keywords.update(keywords => [...keywords, value]);
     }
-    console.log(this.formControl.value);
-    event.chipInput!.clear();
+    event.chipInput?.clear();
     this.updateOpcionales(this.keywords());
   }
   

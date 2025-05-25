@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../services/auth.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -48,7 +48,9 @@ export class NavigationComponent {
   constructor(
     private readonly themeService: ThemeService,
     public auth: AuthService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    private readonly router: Router,
+
   ) {
     this.theme = this.themeService.theme;
     this.showCollapse = this.categoryService.collapsableView;
@@ -65,7 +67,11 @@ export class NavigationComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
-      map((result) => result.matches),
+      map((result) => {
+        console.log("res",  result);
+        console.log(result.matches);
+        return result.matches;
+      }),
       shareReplay()
     );
 
@@ -83,5 +89,6 @@ export class NavigationComponent {
 
   logout(): void {
     this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

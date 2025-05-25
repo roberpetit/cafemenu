@@ -4,7 +4,7 @@
   </div>
 
   @if (cartItems.length > 0) {
-    <div cdkDropList [cdkDropListData]="cartItems" class="example-list">
+    <div cdkDropList cdkDropListDisabled [cdkDropListData]="cartItems" class="example-list">
       @for (item of cartItems; track item; let idx = $index) {
         <div class="example-box row align-items-center py-2 px-2" cdkDrag>
           <!-- Title and price -->

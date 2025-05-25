@@ -19,7 +19,6 @@ export class CartService {
     private cart$ = new BehaviorSubject<CartItem[]>([]);
   
     constructor(private firestore: Firestore, private authService: AuthService) {
-      this.loadCart();
       this.authService.user$.subscribe(user => {
         if (user) {
           this.loadCart();

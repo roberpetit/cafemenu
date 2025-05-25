@@ -1,7 +1,7 @@
 @if (collapsableView) {
 <div cdkDropList [cdkDropListDisabled]="!canEdit" [cdkDropListData]="menuCategories" class="example-list"
   (cdkDropListDropped)="dropCategory($event)">
-  @for (category of menuCategories; track category; let idx = $index) {
+  @for (category of menuCategories; track category.id; let idx = $index) {
 
   <div class="item-collapsable" cdkDrag>
     <mat-expansion-panel class="mt-2" hideToggle [expanded]="category.expanded" (opened)="expandCategory(category)">

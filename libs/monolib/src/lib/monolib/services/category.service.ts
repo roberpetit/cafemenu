@@ -1,9 +1,9 @@
 // category.service.ts
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, debounceTime, Subject, timer } from 'rxjs';
-import { Firestore, collection, collectionData, addDoc, deleteDoc } from '@angular/fire/firestore';
+import { BehaviorSubject, debounceTime, Subject } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { MenuCategory } from '../components/menu-list/menu-list.component';
-import { doc, orderBy, query, updateDoc, writeBatch } from 'firebase/firestore';
+import { doc, orderBy, query, writeBatch } from 'firebase/firestore';
 
 export interface BatchWrite {
   op: 'set' | 'update' | 'delete' | 'add';
@@ -29,8 +29,6 @@ export class CategoryService {
   
   private autoFlush$ = new Subject<void>();
 
-  private categoryUpdateMap = new Map<string, MenuCategory>();
-
   constructor(private firestore: Firestore) {
       this.collectionRef = collection(this.firestore, 'menu');
       this.loadCategories();
@@ -53,7 +51,7 @@ export class CategoryService {
   }
 
   addCategory(category: MenuCategory): void {
-    this.add('menu', category);
+    this.add('menu/' + category.id, category);
   }
 
   editCategory(categoryId: string, category: any): void {
@@ -63,7 +61,6 @@ export class CategoryService {
   deleteCategory(categoryId: string): void {
     this.delete(`menu/${categoryId}`);
   }
-
   
   add(path: string, data: any): void {
     this.queue.next([...this.queue.getValue(), { op: 'add', path, data }]);
@@ -75,8 +72,14 @@ export class CategoryService {
 
   update(path: string, data: any) {
     const queue = this.queue.getValue();
-    const filteredQueue = queue.filter(q => !(q.op === 'update' && q.path === path));
-    this.queue.next([...filteredQueue, { op: 'update', path, data }]);
+    const categoryIsNew = queue.find(q => q.path === path && q.op === 'add');
+    if (categoryIsNew) {
+      const filteredQueue = queue.filter(q => !(q.op === 'add' && q.path === path));
+      this.queue.next([...filteredQueue, { op: 'add', path, data }]);
+    } else {
+      const filteredQueue = queue.filter(q => !(q.op === 'update' && q.path === path));
+      this.queue.next([...filteredQueue, { op: 'update', path, data }]);
+    }
   }
   
 
@@ -86,6 +89,11 @@ export class CategoryService {
 
   public scheduleFlush() {
     this.autoFlush$.next();
+  }
+
+  public undoChanges() {
+    this.queue.next([]);
+    this.loadCategories();
   }
 
   private async flush() {
