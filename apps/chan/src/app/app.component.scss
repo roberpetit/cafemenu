@@ -27,6 +27,7 @@
   position: relative;
   height: 1000px;
   background-color: black;
+  top: 112px;
 }
 
 .insta {
@@ -57,11 +58,57 @@ align-items: center;
 
 .talk-button {
   display: flex;
-width: 203px;
-height: 52px;
+  min-width: 203px;
+  height: 52px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(82deg, #37B0EF 3.34%, #EC00ED 48.01%, #FEDF13 104.33%);
+
+  color: var(--shades-white, #FFF);
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 36px; /* 225% */
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.text1 {
+  margin-top: 83px;
+  height: 340px;
+  align-self: stretch;
+}
+
+.text2 { 
+  margin-top: 50px;
+  height: 150px;
+  align-self: stretch;
+}
+
+.start-project {
+  margin-top: 50px;
+
+  display: flex;
+width: 447px;
+height: 70px;
 padding: 0px 16px;
 justify-content: center;
 align-items: center;
 gap: 16px;
-background-color: linear-gradient(82deg, #37B0EF 3.34%, #EC00ED 48.01%, #FEDF13 104.33%);
+  background: linear-gradient(82deg, #37B0EF 3.34%, #EC00ED 48.01%, #FEDF13 104.33%);
+
+
+  color: var(--shades-white, #FFF);
+text-align: center;
+font-family: Roboto;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 36px; /* 180% */
+letter-spacing: 1.25px;
+text-transform: uppercase;
 }

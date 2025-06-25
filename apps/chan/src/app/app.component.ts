@@ -5,13 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, Router } from '@angular/router';
-import { AuthService, ToolbarIconsComponent } from '@cafemenu-monorepo/monolib';
+import { AuthService } from '@cafemenu-monorepo/monolib';
 import { ThemeService } from '@cafemenu-monorepo/monolib';
 import { Observable, map, shareReplay } from 'rxjs';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, CommonModule, MatIconModule, MatToolbarModule, MatButtonModule, ToolbarIconsComponent
+  imports: [RouterModule, CommonModule, MatIconModule, MatToolbarModule, MatButtonModule
 ],
   selector: 'app-root',
   templateUrl: './app.component.html',
