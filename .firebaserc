@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "cafemenu-fa2d4"
+    "cafemenu": "cafemenu-fa2d4",
+    "chan": "chan-23b01"
   }
 }

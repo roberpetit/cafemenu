@@ -1,0 +1,62 @@
+
+.sidenav {
+  padding-top: 64px; 
+  width: 250px;
+}
+
+.mobile-header {
+  position: fixed;
+  z-index: 9999;
+}
+
+.not-mobile-header {
+  position: fixed;
+  z-index: 9999;
+}
+
+.sidenav-container {
+  padding-top: 64px;
+  min-height: 1000px;
+  overflow: hidden
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.inner-content {
+  z-index: -1;
+  position: relative;
+  margin: 10px;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 164px;
+}
+
+.theme-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
