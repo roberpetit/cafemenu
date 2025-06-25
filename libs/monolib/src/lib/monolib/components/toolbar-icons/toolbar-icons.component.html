@@ -1,0 +1,55 @@
+<div class="row">
+<div class="col">
+    @if ((auth.isAdmin$ | async) && (isHandset$ | async) === false) {
+    <a mat-button routerLink="admin" matTooltip="Admin">
+        <span>{{ auth.getDisplayName() }}</span>
+    </a>
+    }
+    @else if ((isHandset$ | async) === false) {
+    <span>{{ auth.getDisplayName() }}</span>
+    }
+</div>
+<div class="col">
+
+@if (theme() !== 'color-scheme-light') {
+<button mat-icon-button (click)="onThemeChange()">
+    <mat-icon>light_mode</mat-icon>
+</button>
+}
+@else {
+<button mat-icon-button (click)="onThemeChange()">
+    <mat-icon>dark_mode</mat-icon>
+</button>
+}
+
+
+@if ((auth.user$ | async) || auth.isLoggedIn()) {
+<button mat-icon-button (click)="logout()" matTooltip="Logout">
+    <mat-icon>logout</mat-icon>
+</button>
+}
+@else {
+<button mat-icon-button (click)="login()" matTooltip="Login">
+    <mat-icon>login</mat-icon>
+</button>
+}
+
+<!-- 
+      <button color="warn" mat-icon-button aria-label="heart icon">
+        <mat-icon>print</mat-icon>
+      </button>
+      -->
+@if (theme() !== 'color-scheme-light') {
+<button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
+    <img src="/instagram_white.svg" alt="instagram" class="insta" />
+</button>
+}
+@else {
+<button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
+    <img src="/instagram.svg" alt="instagram" class="insta" />
+</button>
+}
+
+
+</div>
+</div>

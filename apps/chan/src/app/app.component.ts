@@ -1,42 +1,35 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component, inject, WritableSignal } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, Router } from '@angular/router';
-import { AuthService, CategoryService } from '@cafemenu-monorepo/monolib';
+import { AuthService, ToolbarIconsComponent } from '@cafemenu-monorepo/monolib';
 import { ThemeService } from '@cafemenu-monorepo/monolib';
 import { Observable, map, shareReplay } from 'rxjs';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, CommonModule, MatIconModule],
+  imports: [RouterModule, CommonModule, MatIconModule, MatToolbarModule, MatButtonModule, ToolbarIconsComponent
+],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   private breakpointObserver = inject(BreakpointObserver);
-
   title = 'chan';
   theme: WritableSignal<string>;
-  showCollapse: WritableSignal<boolean>;
-  form = new FormGroup({
-    collapse: new FormControl(false),
-  });
+  
   constructor(
     private readonly themeService: ThemeService,
     public auth: AuthService,
-    public categoryService: CategoryService,
     private readonly router: Router,
 
   ) {
     this.theme = this.themeService.theme;
-    this.showCollapse = this.categoryService.collapsableView;
-    this.form.get('collapse')?.valueChanges.subscribe((value) => {
-      this.categoryService.collapsableView.set(value ?? false);
-    });
-    this.form.get('collapse')?.setValue(false);
+    console.log('AppComponent initialized with theme:', this.theme());
   }
 
   instaClick(): void {
@@ -68,10 +61,6 @@ export class AppComponent {
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/']);
-  }
-
-  what(): void {
-    console.log('what', this.isHandset$);
   }
   
 }

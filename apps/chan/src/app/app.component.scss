@@ -1,53 +1,47 @@
 
-.sidenav {
-  padding-top: 64px; 
-  width: 250px;
-}
-
 .mobile-header {
   position: fixed;
   z-index: 9999;
+  display: flex;
+  padding: 30px 250px;
+  justify-content: center;
+  align-items: center;
+  gap: 83px;
+  background-color: var(--BLACK, #1A1A1A);
 }
 
 .not-mobile-header {
   position: fixed;
   z-index: 9999;
-}
-
-.sidenav-container {
-  padding-top: 64px;
-  min-height: 1000px;
-  overflow: hidden
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  display: flex;
+  padding: 30px 250px;
+  justify-content: center;
+  align-items: center;
+  gap: 83px;
+  height: 112px;
+  background-color: var(--BLACK, #1A1A1A);
 }
 
 .inner-content {
   z-index: -1;
   position: relative;
-  margin: 10px;
+  height: 1000px;
+  background-color: black;
 }
 
-.logo {
+.insta {
   width: 100%;
   height: auto;
   margin: 0 auto;
   display: block;
 }
 
-.sidenav-header {
+.logo {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 164px;
+width: 194px;
+height: 48px;
+justify-content: center;
+align-items: center;
 }
 
 .theme-toggle {
@@ -59,4 +53,15 @@
 
 .menu-spacer {
   flex: 1 1 auto;
+}
+
+.talk-button {
+  display: flex;
+width: 203px;
+height: 52px;
+padding: 0px 16px;
+justify-content: center;
+align-items: center;
+gap: 16px;
+background-color: linear-gradient(82deg, #37B0EF 3.34%, #EC00ED 48.01%, #FEDF13 104.33%);
 }

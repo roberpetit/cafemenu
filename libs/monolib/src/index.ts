@@ -13,3 +13,4 @@ export * from './lib/monolib/components/cart-preview/cart-preview.component';
 export * from './lib/monolib/components/flyer/flyer.component';
 export * from './lib/monolib/services/cart.service';
 export * from './lib/monolib/services/admin-guard';
+export * from './lib/monolib/components/toolbar-icons/toolbar-icons.component';
