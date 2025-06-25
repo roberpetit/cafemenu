@@ -96,7 +96,7 @@ $color2: #695842;
 $color3: #E5E4E4;
 
 h2 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: $color2;
   margin: 5px;
@@ -108,4 +108,15 @@ h3 {
   font-weight: regular;
   color: $color1;
   margin: 0;
+  margin-top: 5px;
+}
+
+.mat-expansion-panel-body {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.mat-expansion-panel-header {
+  padding: 0px !important;
+  margin: 0px !important;
 }

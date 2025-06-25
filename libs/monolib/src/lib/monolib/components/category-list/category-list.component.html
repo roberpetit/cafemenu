@@ -4,13 +4,22 @@
   <div class="example-box row align-items-center" cdkDrag>
 
     <div class="col-lg-8 col-md-8 col-sm-8">
-      <h3 style="margin-left: 10px;">{{ item.title }}</h3>
-      <p>{{ item.description }}</p>
+      <h3 style="margin-left: 5px;">{{ item.title }}</h3>
+      <p style="margin-left: 5px; margin: 5px;">{{ item.description }}</p>
     </div>
     @if (canEdit) {
 
-    <div class="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
-      <strong style="margin-left: 10px;" class="icons_container">${{ item.price?.toFixed(2) }}</strong>
+    <div class="col-lg-4 col-md-4 col-sm-12 d-flex justify-content-end align-items-center">
+
+      <div class="row">
+        <div class="col">
+
+          <strong style="margin-left: 10px;" class="icons_container">${{ item.price?.toFixed(2) }}</strong>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
       <button mat-icon-button color="primary" (click)="openEditItemDialog.emit(idx)" matTooltip="Editar Item">
         <mat-icon>edit</mat-icon>
       </button>
@@ -24,6 +33,8 @@
       <button cdkDragHandle mat-icon-button color="primary" matTooltip="Mover" style="cursor: grab;">
         <mat-icon>drag_indicator</mat-icon>
       </button>
+      </div>
+      </div>
     </div>
     }
     @else {

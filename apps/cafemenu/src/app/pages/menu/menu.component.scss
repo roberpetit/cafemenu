@@ -10,12 +10,14 @@
   position: fixed;
   right: 1em;
   top: 70px;
+  z-index: 1000;
 }
 
 .fab-undo {
   position: fixed;
   right: 1em;
   top: 170px;
+  z-index: 1000;
 }
 
 .fab-label {

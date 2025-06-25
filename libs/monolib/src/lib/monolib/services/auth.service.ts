@@ -8,7 +8,7 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { setDoc, updateDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',

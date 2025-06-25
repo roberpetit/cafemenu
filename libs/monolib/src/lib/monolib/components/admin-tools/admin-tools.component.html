@@ -42,7 +42,7 @@
 @if (showAdminsPanel) {
 <mat-card class="admin-tools-card">
 
-  <table mat-table [dataSource]="(admins$ | async) || []" class="w-full" matSort>
+  <table mat-table [dataSource]="(filterHiddenAdmins(admins$ | async))" class="w-full" matSort>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">

@@ -22,6 +22,7 @@ export interface Admin {
   name: string;
   created: string;
   email: string;
+  hidden?: boolean;
 }
 @Component({
   selector: 'lib-admin-tools',
@@ -148,5 +149,9 @@ export class AdminToolsComponent implements OnInit {
     if (!confirm('¿Estás seguro de que deseas eliminar este admin?')) return;
     const ref = doc(this.firestore, `admins/${email}`);
     deleteDoc(ref);
+  }
+
+  filterHiddenAdmins(admins: Admin[] | null): Admin[] {
+    return admins?.filter(admin => !admin.hidden) || [];
   }
 }

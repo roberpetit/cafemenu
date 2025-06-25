@@ -4,8 +4,8 @@
   @for (category of menuCategories; track category.id; let idx = $index) {
 
   <div class="item-collapsable" cdkDrag>
-    <mat-expansion-panel class="mt-2" hideToggle [expanded]="category.expanded" (opened)="expandCategory(category)">
-      <mat-expansion-panel-header class="px-2 py-1">
+    <mat-expansion-panel class="body" hideToggle [expanded]="category.expanded" (opened)="expandCategory(category)">
+      <mat-expansion-panel-header class="header">
         <div [id]="category.id" class="spacer d-flex justify-content-between w-100">
           <div class="pad">
             <h2>{{category.title}}</h2>

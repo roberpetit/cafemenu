@@ -1,45 +1,24 @@
-import { Component, inject, WritableSignal } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
+import { Component, inject, WritableSignal } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { ThemeService } from '../../services/theme.service';
-import { AuthService } from '../../services/auth.service';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { CategoryService } from '../../services/category.service';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService, CategoryService } from '@cafemenu-monorepo/monolib';
+import { ThemeService } from '@cafemenu-monorepo/monolib';
+import { Observable, map, shareReplay } from 'rxjs';
 
 @Component({
-  selector: 'lib-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.scss',
   standalone: true,
-  imports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    AsyncPipe,
-    RouterOutlet,
-    RouterLink,
-    CommonModule,
-    MatTooltipModule,
-    MatSlideToggleModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [ThemeService],
+  imports: [RouterModule, CommonModule, MatIconModule],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
-export class NavigationComponent {
+export class AppComponent {
   private breakpointObserver = inject(BreakpointObserver);
+
+  title = 'chan';
   theme: WritableSignal<string>;
   showCollapse: WritableSignal<boolean>;
   form = new FormGroup({
@@ -61,7 +40,7 @@ export class NavigationComponent {
   }
 
   instaClick(): void {
-    window.open('https://www.instagram.com/santoscafe___/?hl=es', '_blank');
+    window.open('https://www.instagram.com/chan/?hl=es', '_blank');
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -94,4 +73,5 @@ export class NavigationComponent {
   what(): void {
     console.log('what', this.isHandset$);
   }
+  
 }

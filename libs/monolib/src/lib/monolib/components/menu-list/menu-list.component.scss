@@ -4,6 +4,7 @@
     margin: 0 25px 25px 0;
     display: inline-block;
     vertical-align: top;
+    margin-bottom: 10px;
   }
   
   .example-list {
@@ -67,9 +68,21 @@
   }
 
   .pad {
-    padding-left: 20px;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 15px;
   }
 
   .spacer {
     flex: 1 1 auto;
+  }
+
+  .header {
+    min-height: 40px;
+    height: max-content;
+  }
+
+  .mat-expansion-panel-header.mat-expanded {
+    min-height: 40px;
+    height: max-content;
   }

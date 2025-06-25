@@ -23,12 +23,12 @@
     }
   -->
 
-  @if (auth.isAdmin$ | async) {
+  @if ((auth.isAdmin$ | async) && (isHandset$ | async) === false) {
   <a mat-button routerLink="admin" matTooltip="Admin">
     <span>{{ auth.getDisplayName() }}</span>
   </a>
   }
-  @else if ((isHandset$ | async) === false){
+  @else if ((isHandset$ | async) === false) {
   <span>{{ auth.getDisplayName() }}</span>
   }
 
@@ -51,7 +51,7 @@
     <button color="warn" mat-icon-button aria-label="heart icon">
       <mat-icon>print</mat-icon>
     </button>
-  -->
+    -->
   @if (theme() !== 'color-scheme-light') {
   <button mat-icon-button aria-label="instagram icon" color="primary" (click)="instaClick()" matTooltip="Instagram">
     <img src="/instagram_white.svg" alt="instagram" class="logo" />
@@ -74,8 +74,7 @@
       </mat-toolbar>
     </div>
     <div>
-
-      <div class="row mb-2 mt-2">
+      <div class="row mb-2 mt-4">
         <div class="col-12 d-flex align-items-center justify-content-center small">
           <form [formGroup]="form" class="d-flex justify-content-center">
             <mat-slide-toggle formControlName="collapse" class="small">
