@@ -5,6 +5,7 @@
 @use 'bootstrap/scss/bootstrap-grid.scss';
 
 @include mat.core();
+@import "@angular/material/prebuilt-themes/azure-blue.css";
 
 $angular-material-3-theme-dark: mat.define-theme(
   (
@@ -37,13 +38,18 @@ $angular-material-3-theme-light: mat.define-theme(
   ),
 );
 
-html, body { 
-    height: 100%; 
+
+
+
+$primary-color: linear-gradient(82deg, #37B0EF 3.34%, #EC00ED 48.01%, #FEDF13 104.33%);;
+.btn {
+  background-color: $primary-color;
 }
 
+html, body { height: 100%; }
 body { 
   margin: 0; 
-  font-family: Roboto, sans-serif; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
   //@include mat.all-component-themes($angular-material-3-theme-dark);
   @include mat.sidenav-overrides((
     content-background-color: transparent,
@@ -54,6 +60,7 @@ body {
   //background-image: url("./../public/fondo.jpeg");
   //background-repeat: repeat;
   //background-size: cover;
+  background-color: black;
 }
 
 .color-scheme-dark {
@@ -117,4 +124,166 @@ h3 {
 .mat-expansion-panel-header {
   padding: 0px !important;
   margin: 0px !important;
+}
+
+
+
+
+
+/* These tokens are generated using https://themes.angular-material.dev/ */
+/* Preview: https://themes.angular-material.dev/?bold-font-weight=700&brand-font-family=Roboto&medium-font-weight=500&plain-font-family=Roboto&regular-font-weight=400&seed-error=%23b90063&seed-neutral=%23747874&seed-neutral-variant=%236f7a73&seed-primary=%2300694a&seed-secondary=%23466556&seed-tertiary=%235b5798 */
+/* Seed Colors: primary: #00694a, secondary: #466556, tertiary: #5b5798, error: #b90063, neutral: #747874, neutral-variant: #6f7a73 */
+/* Seed Typography: plain-font-family: Roboto, brand-font-family: Roboto, bold-font-weight: 700, medium-font-weight: 500, regular-font-weight: 400 */
+
+/* Make sure to import fonts in `<head>` of html */
+/*
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto&display=swap');
+</style>
+
+OR
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto&display=swap">
+*/
+
+
+
+/* Light Theme */
+:root, :host {
+  @include mat.theme-overrides((
+    primary: #076c4d,
+    on-primary: #ffffff,
+    primary-container: #9ff4cc,
+    on-primary-container: #002115,
+    inverse-primary: #83d7b1,
+    primary-fixed: #9ff4cc,
+    primary-fixed-dim: #83d7b1,
+    on-primary-fixed: #002115,
+    on-primary-fixed-variant: #005139,
+    secondary: #466556,
+    on-secondary: #ffffff,
+    secondary-container: #c8ead7,
+    on-secondary-container: #012115,
+    secondary-fixed: #c8ead7,
+    secondary-fixed-dim: #accebc,
+    on-secondary-fixed: #012115,
+    on-secondary-fixed-variant: #2e4d3f,
+    tertiary: #5b5798,
+    on-tertiary: #ffffff,
+    tertiary-container: #e3dfff,
+    on-tertiary-container: #171051,
+    tertiary-fixed: #e3dfff,
+    tertiary-fixed-dim: #c5c0ff,
+    on-tertiary-fixed: #171051,
+    on-tertiary-fixed-variant: #433f7e,
+    background: #fcf9f7,
+    on-background: #1c1b1b,
+    surface: #fcf9f7,
+    surface-dim: #dcd9d8,
+    surface-bright: #fcf9f7,
+    surface-container-lowest: #ffffff,
+    surface-container-low: #f6f3f2,
+    surface-container: #f0edec,
+    surface-container-high: #ebe7e6,
+    surface-container-highest: #e5e2e1,
+    on-surface: #1c1b1b,
+    shadow: #000000,
+    scrim: #000000,
+    surface-tint: #5b5f5c,
+    inverse-surface: #313030,
+    inverse-on-surface: #f3f0ef,
+    outline: #747874,
+    outline-variant: #c3c8c3,
+    neutral: #787776,
+    neutral10: #1c1b1b,
+    error: #ba1a1a,
+    error-container: #ffdad6,
+    on-error: #ffffff,
+    on-error-container: #410002,
+    surface-variant: #dfe4df,
+    on-surface-variant: #434844,
+    neutral-variant: #737874,
+    neutral-variant20: #2d312e,
+    inverse-secondary: #accebc,
+    inverse-tertiary: #c5c0ff,
+  ));
+}
+
+/* Dark Theme */
+.dark {
+  @include mat.theme-overrides((
+    primary: #83d7b1,
+    on-primary: #003826,
+    primary-container: #005139,
+    on-primary-container: #9ff4cc,
+    inverse-primary: #076c4d,
+    primary-fixed: #9ff4cc,
+    primary-fixed-dim: #83d7b1,
+    on-primary-fixed: #002115,
+    on-primary-fixed-variant: #005139,
+    secondary: #accebc,
+    on-secondary: #183629,
+    secondary-container: #2e4d3f,
+    on-secondary-container: #c8ead7,
+    secondary-fixed: #c8ead7,
+    secondary-fixed-dim: #accebc,
+    on-secondary-fixed: #012115,
+    on-secondary-fixed-variant: #2e4d3f,
+    tertiary: #c5c0ff,
+    on-tertiary: #2c2866,
+    tertiary-container: #433f7e,
+    on-tertiary-container: #e3dfff,
+    tertiary-fixed: #e3dfff,
+    tertiary-fixed-dim: #c5c0ff,
+    on-tertiary-fixed: #171051,
+    on-tertiary-fixed-variant: #433f7e,
+    background: #131313,
+    on-background: #e5e2e1,
+    surface: #131313,
+    surface-dim: #131313,
+    surface-bright: #3a3938,
+    surface-container-lowest: #0e0e0e,
+    surface-container-low: #1c1b1b,
+    surface-container: #201f1f,
+    surface-container-high: #2a2a29,
+    surface-container-highest: #353534,
+    on-surface: #e5e2e1,
+    shadow: #000000,
+    scrim: #000000,
+    surface-tint: #c4c7c3,
+    inverse-surface: #e5e2e1,
+    inverse-on-surface: #313030,
+    outline: #8e928d,
+    outline-variant: #434844,
+    neutral: #787776,
+    neutral10: #1c1b1b,
+    error: #ffb4ab,
+    error-container: #93000a,
+    on-error: #690005,
+    on-error-container: #ffdad6,
+    surface-variant: #434844,
+    on-surface-variant: #c3c8c3,
+    neutral-variant: #737874,
+    neutral-variant20: #2d312e,
+    inverse-secondary: #466556,
+    inverse-tertiary: #5b5798,
+  ));
+}
+
+/* Typography */
+:root, :host {
+  /* core typography tokens are not generating css variables, hence below */
+  --mat-sys-brand-font-family: Roboto;
+  --mat-sys-plain-font-family: Roboto;
+  --mat-sys-bold-font-weight: 700;
+  --mat-sys-medium-font-weight: 500;
+  --mat-sys-regular-font-weight: 400;
+
+  @include mat.theme-overrides((
+    brand-family: Roboto,
+    plain-family: Roboto,
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400,
+  ));
 }

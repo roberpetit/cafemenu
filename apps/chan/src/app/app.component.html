@@ -1,29 +1,29 @@
 <div class="content" [ngClass]="theme()">
-
   <mat-toolbar fixedInViewport [ngClass]="(isHandset$ | async) ? 'mobile-header' : 'not-mobile-header'">
+    @if (isHandset$ | async) {
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button>
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <img src="/logo.svg" alt="Logo" class="logo-mobile" />
+    <lib-toolbar-icons [instaUrl]="'https://www.instagram.com/chan/?hl=es'"></lib-toolbar-icons>
+    }
+    @else {
     <img src="/logo.svg" alt="Logo" class="logo" />
     <span class="menu-spacer"></span>
-
     <p>INICIO</p>
     <p>PORTFOLIO</p>
     <p>NOSOTROS</p>
     <p>SERVICIOS</p>
     <p>CLIENTES</p>
     <p>CONTACTO</p>
-
-
     <button matButton="filled" class="talk-button">HABLEMOS</button>
-
-    <span class="spacer"></span>
-
-    <!-- 
-      <lib-toolbar-icons [instaUrl]="'https://www.instagram.com/chan/?hl=es'"></lib-toolbar-icons>
-    -->
+    }
   </mat-toolbar>
 
   <div class="inner-content">
     <router-outlet></router-outlet>
 
+    <!-- Page 1 Content -->
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <img src="/page1-text1.png" alt="text1" class="text1" />
@@ -32,12 +32,24 @@
         <img src="/page1-text2.png" alt="text2" class="text2" />
       </div>
       <div class="col-12 d-flex justify-content-center align-items-center">
-        <button matButton="filled" class="start-project">COMIENZA TU PROYECTO</button>
+        <button matButton="filled" class="start-project-button">COMIENZA TU PROYECTO</button>
       </div>
     </div>
 
 
-
+    <!-- Page 2 Content -->
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <button matButton="outlined" class="second-type-button">NUESTROS SERVICIOS</button>
+      </div>
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <img src="/page2-text1.png" alt="text1" class="text1" />
+      </div>
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <img src="/page2-text2.png" alt="text2" class="text2" />
+      </div>
   </div>
 
+
+  
 </div>
